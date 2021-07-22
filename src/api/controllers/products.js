@@ -5,11 +5,6 @@ module.exports.viewproducts = async (req, res) => {
     if (err) {
       return res.status(500).send({errMsg: 'Internal server error'})
     }
-    var productList = {};
-    products.forEach(function(product) {
-      productList[product._id] = product;
-    });
-
-    res.send(productList);  
+    res.send(products);  
   });
 }
