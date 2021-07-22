@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes';
 import axios from 'axios'
+import { history } from '../App';
 
 axios.defaults.baseURL = 'http://localhost:3001';
 
@@ -13,6 +14,7 @@ export const login = (username,password) => (dispatch) => {
         }
         }).then( response => {
           console.log('User Login', response)
+          history.push('/');
         })
         .then(dispatch(isLogin())
         ).catch((response) => {
