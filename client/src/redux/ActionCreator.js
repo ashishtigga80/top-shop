@@ -1,4 +1,28 @@
 import * as ActionTypes from './ActionTypes';
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:3001';
+
+export const login = (username,password) => (dispatch) => {
+  return axios({
+        method: 'POST',
+        url: '/login',
+        data: {
+          username : username,
+          password : password
+        }
+        }).then( response => {
+          console.log('User Login', response)
+        })
+        .then(dispatch(isLogin())
+        ).catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
+export const isLogin = () => ({
+   type: ActionTypes.IS_LOGIN
+})
 
 export const fetchProducts = () => (dispatch) => {
   return fetch('/products')

@@ -16,10 +16,6 @@ router.post('/login', login)
 router.post('/logout',logout)
 router.post('/signup', signup)
 
-router.get('/', (req,res) => {
-  res.send('Home');
-})
-
 router.get('/products', viewproducts)
 
 router.get('/cart',connectEnsureLogin.ensureLoggedIn('/login'), viewcart)

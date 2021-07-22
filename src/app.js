@@ -5,6 +5,7 @@ const config = require('./config/index');
 const routes = require('./api/routes/index');
 const passport = require('passport');
 const User = require('./models/user');
+const path = require('path');
 
 const expressSession = require('express-session')({
   secret: 'secret',
@@ -16,6 +17,7 @@ const expressSession = require('express-session')({
 const app = express();
 
 app.use(cors());
+app.use(express.static(__dirname + '/../client/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(expressSession);
@@ -35,6 +37,10 @@ const startServer = async () => {
   }catch(err){
     console.log('DB connection failed!' + err);
   }
+
+  app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../client/public/index.html'));
+  });
 
   app.listen(config.port, () => {
       console.log('Server up on ' + config.port), 

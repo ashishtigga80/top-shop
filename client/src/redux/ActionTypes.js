@@ -1,2 +1,3 @@
+export const IS_LOGIN = 'IS_LOGIN';
 export const ADD_PRODUCTS = 'ADD_PRODUCTS';
 export const PRODUCTS_LOADING = 'PRODUCTS_LOADING';

@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import Home from './HomeComponent';
+import Login from './LoginComponent';
 import Products from './ProductsComponent';
 
-import { fetchProducts} from '../redux/ActionCreator';
+import { fetchProducts, login} from '../redux/ActionCreator';
 
 const mapStateToProps = state => {
      return {
@@ -13,10 +14,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  
-    fetchProducts: () => {dispatch(fetchProducts())}
-  
-  });
+  login: (username, password) => {dispatch(login(username, password))},
+  fetchProducts: () => {dispatch(fetchProducts())}
+    
+});
 
 class Main extends Component{
   constructor(props){
@@ -29,15 +30,17 @@ class Main extends Component{
    }
 
   render(){
-      return (
+
+    return (
       <div>
         <Switch>
           <Route exact path="/" component={() => <Home />}/>
+          <Route exact path="/login" component={() => <Login login={this.props.login}/>}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}/>}/>
           <Redirect to="/" />
         </Switch>
       </div>
-  );
+    );
   }
 }
 
