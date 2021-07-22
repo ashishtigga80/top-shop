@@ -44,7 +44,7 @@ module.exports.deletefromcart = async (req, res) => {
     }  
     cart.save();
   });
-  res.redirect("/cart")
+  res.status(204).send();
 }
 
 module.exports.updatecart = async (req, res) => {
@@ -56,5 +56,5 @@ module.exports.updatecart = async (req, res) => {
     }  
     cart.save();
   });
-  res.redirect("/cart")
+  res.status(204).send();
 }

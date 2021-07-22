@@ -1,21 +1,39 @@
 import React from 'react';
-import {Navbar, Nav} from 'react-bootstrap';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
 
-const Header = () => {
+const Header = (props) => {
+  const Usernav = () => {
+    if(!props.user.islogin){
+      return(
+        <><NavItem><NavLink className="nav-link" to="/login">Login</NavLink></NavItem>
+          <NavItem><NavLink className="nav-link" to="/signup">Signup</NavLink></NavItem></>)
+    }else{
+      return(
+        <><NavItem><NavLink className="nav-link" to="/cart">My Cart</NavLink></NavItem>
+          <NavItem><NavLink className="nav-link" to="/orders">My Orders</NavLink></NavItem>
+          <Navbar.Text>
+            Hi, {props.user.user.firstname}
+          </Navbar.Text>
+        </>
+      )
+    }
+  }
   return(
-      <Navbar collapseOnSelect fxied='top' expand='sm' bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
+      <Navbar collapseOnSelect expand='sm' bg="dark" variant="dark">
+          <Navbar.Brand to="/home">
             Shopinit
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/products">Products</Nav.Link>
+              <NavItem><NavLink className="nav-link" to="/home">Home</NavLink></NavItem>
+              
+              <NavItem><NavLink className="nav-link" to="/products">Products</NavLink></NavItem>
+              
             </Nav>
             <Nav>
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/signup">Signup</Nav.Link>
+              <Usernav />
             </Nav>
           </Navbar.Collapse>
       </Navbar>

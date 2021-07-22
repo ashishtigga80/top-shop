@@ -4,8 +4,9 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import Home from './HomeComponent';
 import Login from './LoginComponent';
 import Products from './ProductsComponent';
+import Header from './HeaderComponent';
 
-import { fetchProducts, login} from '../redux/ActionCreator';
+import { fetchProducts, login, isAuthenticated} from '../redux/ActionCreator';
 
 const mapStateToProps = state => {
   return {
@@ -16,24 +17,38 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   login: (username, password) => {dispatch(login(username, password))},
-  fetchProducts: () => {dispatch(fetchProducts())}
+  fetchProducts: () => {dispatch(fetchProducts())},
+  isAuthenticated: () => {dispatch(isAuthenticated())}
 });
 
 class Main extends Component{
+
+  constructor(props){
+    super(props);
+
+    this.isLoggedIn = this.isLoggedIn.bind(this);
+  }
+  
   componentDidMount() {
     this.props.fetchProducts();
+    this.props.isAuthenticated();
   }
 
+  isLoggedIn(){
+    return this.props.user.islogin
+  }
+  
   render(){
     return (
-      <div>
+      <>
+        <Header user = {this.props.user}/>  
         <Switch>
-          <Route exact path="/" component={() => <Home />}/>
+          <Route exact path="/home" component={() => <Home />}/>
           <Route exact path="/login" component={() => <Login login={this.props.login} user= {this.props.user}/>}/>
-          <Route exact path="/products" component={() => <Products products={this.props.products}/>}/>
-          <Redirect to="/" />
+          <Route exact path="/products" component={() => <Products products={this.props.products} />}/>
+          <Redirect to="/home" />
         </Switch>
-      </div>
+      </>
     );
   }
 }

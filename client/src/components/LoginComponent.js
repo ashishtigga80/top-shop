@@ -1,11 +1,12 @@
 import React  from 'react';
 import {Container, Card, Row, Col, Form, Button} from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
 
 const Login = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await props.login(event.target.username.value, event.target.password.value)
+    props.login(event.target.username.value, event.target.password.value)
 
   }
   return(
@@ -38,4 +39,4 @@ const Login = (props) => {
 }
 
 
-export default Login;
+export default withRouter(Login);

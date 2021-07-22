@@ -1,29 +1,41 @@
 import * as ActionTypes from './ActionTypes';
-import axios from 'axios'
+import app from '../config/axiosConfig'
 import { history } from '../App';
 
-axios.defaults.baseURL = 'http://localhost:3001';
-
 export const login = (username,password) => (dispatch) => {
-  return axios({
+  return app({
         method: 'POST',
         url: '/login',
         data: {
           username : username,
           password : password
         }
-        }).then( response => {
-          console.log('User Login', response)
-          history.push('/');
         })
-        .then(dispatch(isLogin())
-        ).catch((response) => {
+        .then( response => dispatch(isLogin(response.data)))
+        .then(history.push('/home'))
+        .catch((response) => {
           console.log('request failed', response)
         });
 }
 
-export const isLogin = () => ({
-   type: ActionTypes.IS_LOGIN
+export const isAuthenticated = () => (dispatch) => {
+  return app.get('/auth')
+        .then( 
+          response => {
+            console.log(response.data)
+            if(response.data.auth){
+              dispatch(isLogin(response.data.user))
+            }
+          }
+        )
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
+export const isLogin = (user) => ({
+   type: ActionTypes.IS_LOGIN,
+   payload: user
 })
 
 export const fetchProducts = () => (dispatch) => {

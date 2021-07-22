@@ -1,6 +1,7 @@
 const passport = require('passport');
 const User = require('../../models/user');
 const Cart = require('../../models/cart');
+const connectEnsureLogin = require('connect-ensure-login');
 
 module.exports.login = async (req, res) => {
   await passport.authenticate('local',(err, user) => {
@@ -14,7 +15,13 @@ module.exports.login = async (req, res) => {
       if (err) {
         return res.status(500).send({errMsg: 'Internal server error'})
       }
-      return res.redirect('/');
+      const userdata = {
+        _id: user._id,
+        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname
+      }
+     res.status(200).send(userdata);
     });
   })(req, res);
 }
@@ -24,7 +31,7 @@ module.exports.logout = (req, res) => {
     if (err) {
       return res.status(500).send({errMsg: 'Internal server error'})
     }
-    res.redirect('/'); 
+    res.status(204).send(); 
   });
 }  
 
@@ -45,8 +52,16 @@ module.exports.signup = (req, res) => {
         }
       })
       await passport.authenticate("local")(req,res,function(){
-      res.redirect("/");
+      res.status(200).send(user);
       });
     }
   });
 } 
+
+module.exports.checkauth =  (req, res) => {
+  if(req.user)
+    return res.send({auth: true, user : req.user})
+  else{
+    return res.send({auth: false})
+  }  
+}

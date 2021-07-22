@@ -6,7 +6,7 @@ export const User = (state = {
    }, action) => {
    switch(action.type){
       case ActionTypes.IS_LOGIN:
-        return {...state, islogin: true}
+        return {...state, islogin: true, user: action.payload}
       default: 
         return state;
    }

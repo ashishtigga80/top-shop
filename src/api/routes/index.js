@@ -1,6 +1,6 @@
 const express = require('express');
 const connectEnsureLogin = require('connect-ensure-login');
-const { login, logout, signup} = require('../controllers/auth');
+const { login, logout, signup, checkauth} = require('../controllers/auth');
 const {viewproducts} = require('../controllers/products');
 const { viewcart,addtocart, deletefromcart, updatecart} = require('../controllers/cart');
 const {checkout, checkoutpay} = require('../controllers/checkout');
@@ -11,7 +11,7 @@ var router = express.Router();
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json());
 
-
+router.get('/auth', checkauth)
 router.post('/login', login)
 router.post('/logout',logout)
 router.post('/signup', signup)

@@ -16,7 +16,16 @@ const expressSession = require('express-session')({
 
 const app = express();
 
-app.use(cors());
+const origin = process.env.NODE_ENV === "development" 
+  ? "http://localhost:3000" 
+  : "http://example.com"
+
+app.use(
+  cors({
+    credentials: true,
+    origin
+  }),
+);
 app.use(express.static(__dirname + '/../client/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,7 +47,7 @@ const startServer = async () => {
     console.log('DB connection failed!' + err);
   }
 
-  app.get('*', (req,res) =>{
+  app.get('/p', (req,res) =>{
     res.sendFile(path.join(__dirname+'/../client/public/index.html'));
   });
 

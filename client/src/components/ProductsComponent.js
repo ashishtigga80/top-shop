@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, Col, Row, Spinner, Card} from 'react-bootstrap';
-import Header from './HeaderComponent';
 
 const Products = (props) => {
   if(props.products.isLoading) {
@@ -27,14 +26,11 @@ const Products = (props) => {
       );
     });
     return(
-      <>
-      <Header />
       <Container>
         <Row>
           {products}
         </Row>
       </Container>
-      </>
     )
   }    
 }
