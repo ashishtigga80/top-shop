@@ -1,8 +1,11 @@
 import React from 'react';
 import {Alert, Row, Col, Container} from 'react-bootstrap';
+import Header from './HeaderComponent';
 
-const Home = () => {
+const Home = (props) => {
   return(
+    <>
+    <Header user = {props.user}/>  
     <Container>
       <Row>
         <Col>
@@ -17,6 +20,7 @@ const Home = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 }
 

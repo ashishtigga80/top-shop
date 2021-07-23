@@ -15,7 +15,7 @@ module.exports.login = async (req, res) => {
       if (err) {
         return res.status(500).send({errMsg: 'Internal server error'})
       }
-      const userdata = {
+      var userdata = {
         _id: user._id,
         username: user.username,
         firstname: user.firstname,
@@ -46,14 +46,23 @@ module.exports.signup = (req, res) => {
         products: [],
         cartTotal: 0
       })
-      await cart.save(function (err, cart) {
+      await cart.save(async function (err, cart) {
         if (err) {
+          console.log(err)
           return res.status(500).send({errMsg: 'Internal server error'})
         }
+        else{
+          await passport.authenticate("local")(req,res,function(){
+            userdata = {
+                _id: user._id,
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname
+              }
+            res.status(200).send(userdata);
+          });
+        }
       })
-      await passport.authenticate("local")(req,res,function(){
-      res.status(200).send(user);
-      });
     }
   });
 } 

@@ -1,8 +1,13 @@
-import React from 'react';
-import {Container, Col, Row, Spinner, Card} from 'react-bootstrap';
+import React, {useEffect} from 'react';
+import {Card,Spinner,  Row, Col, Container} from 'react-bootstrap';
 import Header from './HeaderComponent';
 
-const Products = (props) => {
+const Cart = (props) => {
+
+  useEffect(() => {
+    props.fetchCart();
+  });
+
   if(props.products.isLoading) {
     return(
       <div >
@@ -36,7 +41,8 @@ const Products = (props) => {
       </Container>
       </>
     )
-  }    
+  }  
 }
 
-export default Products;
+
+export default Cart;

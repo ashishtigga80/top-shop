@@ -3,21 +3,28 @@ import { connect } from 'react-redux';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import Home from './HomeComponent';
 import Login from './LoginComponent';
+import Signup from './SignupComponent';
 import Products from './ProductsComponent';
-import Header from './HeaderComponent';
+import Logout from './LogoutComponent';
+import Cart from './CartComponent';
 
-import { fetchProducts, login, isAuthenticated} from '../redux/ActionCreator';
+import { fetchProducts, login, isAuthenticated, signup, logout, fetchCart} from '../redux/ActionCreator';
+
 
 const mapStateToProps = state => {
   return {
     products: state.products,
-    user: state.user
+    user: state.user,
+    cart: state.cart
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   login: (username, password) => {dispatch(login(username, password))},
+  signup: (firstname, lastname, username, password) => {dispatch(signup(firstname, lastname, username, password))},
+  logout: () => {dispatch(logout())},
   fetchProducts: () => {dispatch(fetchProducts())},
+  fetchCart: () => {dispatch(fetchCart())},
   isAuthenticated: () => {dispatch(isAuthenticated())}
 });
 
@@ -30,8 +37,8 @@ class Main extends Component{
   }
   
   componentDidMount() {
-    this.props.fetchProducts();
     this.props.isAuthenticated();
+    this.props.fetchProducts();
   }
 
   isLoggedIn(){
@@ -40,12 +47,14 @@ class Main extends Component{
   
   render(){
     return (
-      <>
-        <Header user = {this.props.user}/>  
+      <> 
         <Switch>
-          <Route exact path="/home" component={() => <Home />}/>
-          <Route exact path="/login" component={() => <Login login={this.props.login} user= {this.props.user}/>}/>
-          <Route exact path="/products" component={() => <Products products={this.props.products} />}/>
+          <Route exact path="/home" component={() => <Home  user = {this.props.user}/>}/>
+          <Route exact path="/login" component={() => <Login login={this.props.login}/>}/>
+          <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
+          <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
+          <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
+          <Route path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} products={this.props.products} user = {this.props.user}/> : <Redirect to='/login' /> )} />
           <Redirect to="/home" />
         </Switch>
       </>

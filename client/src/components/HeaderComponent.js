@@ -10,11 +10,12 @@ const Header = (props) => {
           <NavItem><NavLink className="nav-link" to="/signup">Signup</NavLink></NavItem></>)
     }else{
       return(
-        <><NavItem><NavLink className="nav-link" to="/cart">My Cart</NavLink></NavItem>
-          <NavItem><NavLink className="nav-link" to="/orders">My Orders</NavLink></NavItem>
-          <Navbar.Text>
+        <><Navbar.Text>
             Hi, {props.user.user.firstname}
           </Navbar.Text>
+          <NavItem><NavLink className="nav-link" to="/cart">My Cart</NavLink></NavItem>
+          <NavItem><NavLink className="nav-link" to="/orders">My Orders</NavLink></NavItem>
+          <NavItem><NavLink className="nav-link" to="/logout">Logout</NavLink></NavItem>
         </>
       )
     }

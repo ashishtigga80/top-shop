@@ -5,8 +5,10 @@ export const User = (state = {
     user: {}
    }, action) => {
    switch(action.type){
-      case ActionTypes.IS_LOGIN:
+      case ActionTypes.DO_LOGIN:
         return {...state, islogin: true, user: action.payload}
+      case ActionTypes.DO_LOGOUT:
+        return {...state, islogin: false, user: {}}  
       default: 
         return state;
    }

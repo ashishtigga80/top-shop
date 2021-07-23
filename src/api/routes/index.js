@@ -11,7 +11,7 @@ var router = express.Router();
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json());
 
-router.get('/auth', checkauth)
+router.get('/api/auth', checkauth)
 router.post('/login', login)
 router.post('/logout',logout)
 router.post('/signup', signup)

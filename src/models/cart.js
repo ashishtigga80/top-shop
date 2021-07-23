@@ -4,31 +4,26 @@ const mongoose =require('mongoose')
 const cartSchema=new mongoose.Schema({  
   userId: {
     type: String,
-    unique: true,
-    required: true
+    unique: true
   },
   products: [{
-    productId : {
-      type: String,
-      unique: true,
-      required: true
-    },
-    name: {
+      productId : {
         type: String,
-        required: true
-    },
-    quantity : {
-      type: Number,
-      required: true
-    },
-    price: {
-      type: Number,
-      required: true
-    }
+        unique: true,
+        sparse: true
+      },
+      name: {
+          type: String
+      },
+      quantity : {
+        type: Number
+      },
+      price: {
+        type: Number,
+      }
   }],
   cartTotal: {
-      type: Number,
-      required: true
+      type: Number
     }
   });
 

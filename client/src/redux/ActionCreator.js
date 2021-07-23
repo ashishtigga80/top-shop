@@ -2,6 +2,24 @@ import * as ActionTypes from './ActionTypes';
 import app from '../config/axiosConfig'
 import { history } from '../App';
 
+export const signup = (firstname, lastname, username, password) => (dispatch) => {
+  return app({
+        method: 'POST',
+        url: '/signup',
+        data: {
+          firstname: firstname,
+          lastname: lastname,
+          username : username,
+          password : password
+        }
+        })
+        .then( response => dispatch(doLogin(response.data)))
+        .then(history.push('/home'))
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
 export const login = (username,password) => (dispatch) => {
   return app({
         method: 'POST',
@@ -11,7 +29,7 @@ export const login = (username,password) => (dispatch) => {
           password : password
         }
         })
-        .then( response => dispatch(isLogin(response.data)))
+        .then( response => dispatch(doLogin(response.data)))
         .then(history.push('/home'))
         .catch((response) => {
           console.log('request failed', response)
@@ -19,12 +37,11 @@ export const login = (username,password) => (dispatch) => {
 }
 
 export const isAuthenticated = () => (dispatch) => {
-  return app.get('/auth')
+  return app.get('/api/auth')
         .then( 
           response => {
-            console.log(response.data)
             if(response.data.auth){
-              dispatch(isLogin(response.data.user))
+              dispatch(doLogin(response.data.user))
             }
           }
         )
@@ -33,12 +50,29 @@ export const isAuthenticated = () => (dispatch) => {
         });
 }
 
-export const isLogin = (user) => ({
-   type: ActionTypes.IS_LOGIN,
+export const logout = () => (dispatch) => {
+  return app({
+        method: 'POST',
+        url: '/logout'
+        })
+        .then(dispatch(doLogout()))
+        .then(history.push('/home'))
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
+export const doLogin = (user) => ({
+   type: ActionTypes.DO_LOGIN,
    payload: user
 })
 
+export const doLogout = () => ({
+   type: ActionTypes.DO_LOGOUT
+})
+
 export const fetchProducts = () => (dispatch) => {
+  
   return fetch('/products')
       .then(response => {
          if(response.ok){
@@ -65,4 +99,28 @@ export const addProducts = (products) => ({
 
 export const productsLoading = () => ({
    type: ActionTypes.PRODUCTS_LOADING
+})
+
+export const fetchCart = () => (dispatch) => {
+
+  return app.get('/cart')
+        .then( 
+          response => {
+            console.log(response.data)
+          }
+        )
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+
+  
+}
+
+export const addCart = (cart) => ({
+   type: ActionTypes.ADD_CART,
+   payload: cart
+})
+
+export const cartLoading = () => ({
+   type: ActionTypes.CART_LOADING
 })
