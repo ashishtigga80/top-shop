@@ -7,6 +7,7 @@ import Signup from './SignupComponent';
 import Products from './ProductsComponent';
 import Logout from './LogoutComponent';
 import Cart from './CartComponent';
+import ProductDetail from './ProductDetailComponent';
 
 import { fetchProducts, login, isAuthenticated, signup, logout, fetchCart} from '../redux/ActionCreator';
 
@@ -54,6 +55,7 @@ class Main extends Component{
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
+          <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products}  user = {this.props.user}/>}/>
           <Route path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> : <Redirect to='/login' /> )} />
           <Redirect to="/home" />
         </Switch>

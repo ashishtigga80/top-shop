@@ -8,6 +8,25 @@ const Cart = (props) => {
     props.fetchCart();
   },[]);
 
+  const Checkout = () => {
+    if(props.cart.cart.products.length === 0){
+      return(<div></div>)
+    }
+    else{
+      return(
+        <Row className="justify-content-center">
+          <Col md={12}>
+            <Card border="dark">
+              <Card.Body>
+                <Button variant="outline-dark">Checkout</Button>
+              </Card.Body>
+            </Card>
+          </Col>  
+        </Row>
+      )
+    }
+  }
+
   if(props.cart.isLoading) {
     return(
       <div >
@@ -19,37 +38,40 @@ const Cart = (props) => {
   else{
     const CartItems = props.cart.cart.products.map((product) => {
       return(
-        <Col key={product._id}md={12}>
-          <Card>
-            <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">Price: ₹{product.price}</Card.Subtitle>
-              <Row>
-                <Col md={2}>
-                  <Card.Text>Quantity</Card.Text>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={2}>
-                  <InputGroup size="sm">
-                    <Button variant="outline-dark" id="button-addon1">
-                      -
-                    </Button>
-                    <FormControl
-                      aria-label="Example text with button addon"
-                      aria-describedby="basic-addon1"
-                      placeholder={product.quantity}
-                      disabled
-                    />
-                    <Button variant="outline-dark" id="button-addon2">
-                      +
-                    </Button>
-                  </InputGroup>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>)
+        <Row key={product._id}>
+          <Col md={12}>
+            <Card>
+              <Card.Body>
+                <Card.Title>{product.name}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">Price: ₹{product.price}</Card.Subtitle>
+                <Row className="Row-padding">
+                  <Col md={2}>
+                    <Card.Text>Quantity</Card.Text>
+                  </Col>
+                </Row>
+                <Row className="Row-padding">
+                  <Col md={2}>
+                    <InputGroup size="sm">
+                      <Button variant="outline-dark" id="button-addon1">
+                        -
+                      </Button>
+                      <FormControl
+                        aria-label="Example text with button addon"
+                        aria-describedby="basic-addon1"
+                        placeholder={product.quantity}
+                        disabled
+                      />
+                      <Button variant="outline-dark" id="button-addon2">
+                        +
+                      </Button>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <Button variant="outline-dark">Delete</Button>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>)
     })
     return(
       <>
@@ -64,8 +86,9 @@ const Cart = (props) => {
               </Card.Body>
             </Card>
           </Col>  
-          {CartItems}
         </Row>
+        {CartItems}
+        <Checkout />
       </Container>
       </>
     )  

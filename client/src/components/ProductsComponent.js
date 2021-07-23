@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Col, Row, Spinner, Card} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Header from './HeaderComponent';
 
 const Products = (props) => {
@@ -17,7 +18,7 @@ const Products = (props) => {
         <Col sm={3} key={product._id} className='Col-padding'>
           <Card border="dark">
             <Card.Body>
-              <Card.Title>{product.name}</Card.Title>
+              <Card.Title><Link to={'/products/' + product._id}>{product.name}</Link></Card.Title>
               <Card.Subtitle>
                 ₹{product.price}
               </Card.Subtitle>
