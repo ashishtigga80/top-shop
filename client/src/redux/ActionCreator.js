@@ -104,16 +104,10 @@ export const productsLoading = () => ({
 export const fetchCart = () => (dispatch) => {
 
   return app.get('/cart')
-        .then( 
-          response => {
-            console.log(response.data)
-          }
-        )
+        .then(response => dispatch(addCart(response.data)))
         .catch((response) => {
           console.log('request failed', response)
-        });
-
-  
+  });
 }
 
 export const addCart = (cart) => ({

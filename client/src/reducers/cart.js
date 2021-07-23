@@ -8,7 +8,7 @@ export const Cart = (state = {
       case ActionTypes.ADD_CART:
          return {...state, isLoading: false, cart: action.payload};
       case ActionTypes.CART_LOADING:
-         return {...state, isLoading: true,  products: {}};   
+         return {...state, isLoading: true,  cart: {}};   
       default: 
          return state;
    }

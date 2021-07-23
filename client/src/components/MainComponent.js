@@ -54,7 +54,7 @@ class Main extends Component{
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
-          <Route path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} products={this.props.products} user = {this.props.user}/> : <Redirect to='/login' /> )} />
+          <Route path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> : <Redirect to='/login' /> )} />
           <Redirect to="/home" />
         </Switch>
       </>
