@@ -32,10 +32,6 @@ const orderSchema = new Schema({
             type: String,
             required: true
         },
-        line2 : {
-            type: String,
-            required: true
-        },
         city : {
             type: String,
             required: true

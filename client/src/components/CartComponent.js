@@ -15,7 +15,7 @@ const Cart = (props) => {
           <Col md={12}>
             <Card border="dark">
               <Card.Body>
-                <Button variant="outline-dark">Checkout</Button>
+                <Link to="/cart/checkout"><Button variant="outline-dark">Checkout</Button></Link>
               </Card.Body>
             </Card>
           </Col>  

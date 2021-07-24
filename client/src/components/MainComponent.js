@@ -13,6 +13,7 @@ import AddtoCart from './AddtoCartComponent';
 import DeletefromCart from './DeletefromCartComponent'
 import PrivateRoute from './PrivateRouteComponent';
 import UpdateCart from './UpdateCartComponent';
+import Checkout from './CheckoutComponent';
 
 import { fetchProducts, login, signup, logout, fetchCart, addtoCart, deletefromCart, updateCart} from '../redux/ActionCreator';
 
@@ -58,10 +59,11 @@ class Main extends Component{
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
           <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products}  user = {this.props.user}/>}/>
-          <PrivateRoute path='/cart' component={() => <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> }/>
+          <PrivateRoute exact path='/cart' component={() => <Cart cart={this.props.cart} user = {this.props.user}/> }/>
           <PrivateRoute path='/products/addtocart/:id' component={() => <AddtoCart addtoCart ={this.props.addtoCart}/> }/>
           <PrivateRoute path='/products/deletefromcart/:id' component={() => <DeletefromCart deletefromCart ={this.props.deletefromCart}/> }/>
           <PrivateRoute path='/products/updatecart/:id' component={() => <UpdateCart updateCart ={this.props.updateCart}/> }/>
+          <PrivateRoute exact path='/cart/checkout' component={() => <Checkout cart={this.props.cart} user = {this.props.user}/> }/>
           <Redirect to="/home" />
         </Switch>
       </>

@@ -14,7 +14,6 @@ module.exports.checkout = async (req,res) => {
       address: {
         street : '',
         line1 : '',
-        line2 : '',
         city : '',
         pincode : '',
         state : '',
@@ -69,7 +68,6 @@ module.exports.checkoutpay = async (req,res) => {
                     address: {
                       street : req.body.street,
                       line1 : req.body.line1,
-                      line2 : req.body.line2,
                       city : req.body.city,
                       pincode : req.body.pincode,
                       state : req.body.state,
