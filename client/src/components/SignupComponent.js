@@ -6,7 +6,7 @@ const Login = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    props.signup(event.target.firstname.value, event.target.lastname.value, event.target.username.value, event.target.password.value)
+    props.signup(event.target.firstname.value, event.target.lastname.value, event.target.email.value, event.target.password.value)
 
   }
   return(
@@ -26,8 +26,8 @@ const Login = (props) => {
                     <Form.Control id="lastname" name="lastname" type="text" placeholder="Enter lastname" required/>
                   </Form.Group>
                   <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="username">Email address</Form.Label >
-                    <Form.Control id="username" name="username" type="email" placeholder="Enter email" required/>
+                    <Form.Label htmlFor="email">Email address</Form.Label >
+                    <Form.Control id="email" name="email" type="email" placeholder="Enter email" required/>
                   </Form.Group>
 
                   <Form.Group className="mb-3" >

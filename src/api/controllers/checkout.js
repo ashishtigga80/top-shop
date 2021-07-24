@@ -10,7 +10,7 @@ module.exports.checkout = async (req,res) => {
       firstname: req.user.firstname,
       lastname: req.user.lastname,
       contactno: '',
-      email: req.user.username,
+      email: req.user.email,
       address: {
         street : '',
         line1 : '',

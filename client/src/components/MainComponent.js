@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
+
 import Home from './HomeComponent';
 import Login from './LoginComponent';
 import Signup from './SignupComponent';
@@ -10,7 +11,11 @@ import Cart from './CartComponent';
 import ProductDetail from './ProductDetailComponent';
 import AddtoCart from './AddtoCartComponent';
 import DeletefromCart from './DeletefromCartComponent'
-import { fetchProducts, login, isAuthenticated, signup, logout, fetchCart, addtoCart, deletefromCart} from '../redux/ActionCreator';
+import PrivateRoute from './PrivateRouteComponent';
+import UpdateCart from './UpdateCartComponent';
+
+import { fetchProducts, login, signup, logout, fetchCart, addtoCart, deletefromCart, updateCart} from '../redux/ActionCreator';
+
 
 const mapStateToProps = state => {
   return {
@@ -21,32 +26,27 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  login: (username, password) => {dispatch(login(username, password))},
-  signup: (firstname, lastname, username, password) => {dispatch(signup(firstname, lastname, username, password))},
+  login: (email, password) => {dispatch(login(email, password))},
+  signup: (firstname, lastname, email, password) => {dispatch(signup(firstname, lastname, email, password))},
   logout: () => {dispatch(logout())},
   fetchProducts: () => {dispatch(fetchProducts())},
   fetchCart: () => {dispatch(fetchCart())},
   addtoCart: (id) => {dispatch(addtoCart(id))},
   deletefromCart: (id) => {dispatch(deletefromCart(id))},
-  isAuthenticated: () => {dispatch(isAuthenticated())}
+  updateCart: (id, quantity) => {dispatch(updateCart(id, quantity))},
 });
 
 class Main extends Component{
 
   constructor(props){
     super(props);
-
-    this.isLoggedIn = this.isLoggedIn.bind(this);
   }
   
   componentDidMount() {
-    this.props.isAuthenticated();
     this.props.fetchProducts();
+    this.props.fetchCart();
   }
 
-  isLoggedIn(){
-    return this.props.user.islogin
-  }
   
   render(){
     return (
@@ -57,10 +57,11 @@ class Main extends Component{
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
-          <Route exact path='/products/:id' render={props => (this.isLoggedIn() ? <ProductDetail products={this.props.products}  user = {this.props.user}/> : <Redirect to='/login' /> )} />
-          <Route exact path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> : <Redirect to='/login' /> )} />
-          <Route exact path='/products/addtocart/:id' render={props => (this.isLoggedIn() ? <AddtoCart addtoCart ={this.props.addtoCart}/> : <Redirect to='/login' /> )} />
-          <Route exact path='/products/deletefromcart/:id' render={props => (this.isLoggedIn() ? <DeletefromCart deletefromCart ={this.props.deletefromCart}/> : <Redirect to='/login' /> )} />
+          <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products}  user = {this.props.user}/>}/>
+          <PrivateRoute path='/cart' component={() => <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> }/>
+          <PrivateRoute path='/products/addtocart/:id' component={() => <AddtoCart addtoCart ={this.props.addtoCart}/> }/>
+          <PrivateRoute path='/products/deletefromcart/:id' component={() => <DeletefromCart deletefromCart ={this.props.deletefromCart}/> }/>
+          <PrivateRoute path='/products/updatecart/:id' component={() => <UpdateCart updateCart ={this.props.updateCart}/> }/>
           <Redirect to="/home" />
         </Switch>
       </>

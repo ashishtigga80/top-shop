@@ -10,6 +10,8 @@ module.exports = {
    
    databaseURL: process.env.DB_URL,
 
-   StripeAPIKey: process.env.STRIPE_KEY
+   StripeAPIKey: process.env.STRIPE_KEY,
+
+   key: process.env.KEY
    
 };

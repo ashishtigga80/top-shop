@@ -1,65 +1,64 @@
 import * as ActionTypes from './ActionTypes';
-import app from '../config/axiosConfig'
 import { history } from '../App';
+import setAuthToken from '../utils/setAuthToken'
+import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 
-export const signup = (firstname, lastname, username, password) => (dispatch) => {
-  return app({
+export const signup = (firstname, lastname, email, password) => (dispatch) => {
+  return axios({
         method: 'POST',
         url: '/signup',
         data: {
           firstname: firstname,
           lastname: lastname,
-          username : username,
+          email : email,
           password : password
         }
         })
-        .then( response => dispatch(doLogin(response.data)))
-        .then(history.push('/home'))
+        .then(history.replace('/login'))
         .catch((response) => {
           console.log('request failed', response)
         });
 }
 
-export const login = (username,password) => (dispatch) => {
-  return app({
+export const login = (email,password) => (dispatch) => {
+  return axios({
         method: 'POST',
         url: '/login',
         data: {
-          username : username,
+          email : email,
           password : password
         }
         })
-        .then( response => dispatch(doLogin(response.data)))
-        .then(history.push('/home'))
+        .then(res => {
+          // Save to localStorage
+
+          // Set token to localStorage
+          console.log(res)
+          const { token } = res.data;
+          localStorage.setItem("jwtToken", token);
+          // Set token to Auth header
+          setAuthToken(token);
+          // Decode token to get user data
+          const decoded = jwt_decode(token);
+          // Set current user
+          dispatch(doLogin(decoded));
+          history.replace('/home');
+        })
         .catch((response) => {
           console.log('request failed', response)
         });
 }
 
-export const isAuthenticated = () => (dispatch) => {
-  return app.get('/api/auth')
-        .then( 
-          response => {
-            if(response.data.auth){
-              dispatch(doLogin(response.data.user))
-            }
-          }
-        )
-        .catch((response) => {
-          console.log('request failed', response)
-        });
-}
 
 export const logout = () => (dispatch) => {
-  return app({
-        method: 'POST',
-        url: '/logout'
-        })
-        .then(dispatch(doLogout()))
-        .then(history.push('/home'))
-        .catch((response) => {
-          console.log('request failed', response)
-        });
+  // Remove token from local storage
+  localStorage.removeItem("jwtToken");
+  // Remove auth header for future requests
+  setAuthToken(false);
+  // Set current user to empty object {} which will set isAuthenticated to false
+  dispatch(doLogout());
+  history.replace('/home')
 }
 
 export const doLogin = (user) => ({
@@ -71,25 +70,19 @@ export const doLogout = () => ({
    type: ActionTypes.DO_LOGOUT
 })
 
+
+
+
+
+
+
 export const fetchProducts = () => (dispatch) => {
   
-  return fetch('/products')
-      .then(response => {
-         if(response.ok){
-            return response;
-         }
-         else{
-            var error = new Error('Error' + response.status + ':' + response.statusText);
-            error.response = response;
-            throw error;
-         }
-      },
-      error => {
-         var errmess = new Error(error.message)
-         throw errmess;
-      })
-      .then(response => response.json())
-      .then(products => dispatch(addProducts(products)))
+  return axios.get('/products')
+        .then(response => dispatch(addProducts(response.data)))
+        .catch((response) => {
+          console.log('request failed', response)
+  });
 }
 
 export const addProducts = (products) => ({
@@ -101,9 +94,11 @@ export const productsLoading = () => ({
    type: ActionTypes.PRODUCTS_LOADING
 })
 
+
+
 export const fetchCart = () => (dispatch) => {
 
-  return app.get('/cart')
+  return axios.get('/cart')
         .then(response => dispatch(addCart(response.data)))
         .catch((response) => {
           console.log('request failed', response)
@@ -121,31 +116,43 @@ export const cartLoading = () => ({
 
 export const addtoCart = (id) => (dispatch) => {
   var urlwithid = '/products/addtocart/' + id 
-  return app({
+  return axios({
         method: 'POST',
         url: urlwithid
         })
-        .then( response => dispatch(updateCart(response.data)))
+        .then(dispatch(cartLoading()))
+        .then(dispatch(fetchCart()))
         .then(history.push('/cart'))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((res) => {
+          console.log('request failed', res)
         });
 }
 
 export const deletefromCart = (id) => (dispatch) => {
   var urlwithid = '/products/deletefromcart/' + id 
-  return app({
+  return axios({
         method: 'DELETE',
         url: urlwithid
         })
-        .then( response => dispatch(updateCart(response.data)))
+        .then(dispatch(cartLoading()))
+        .then(dispatch(fetchCart()))
         .then(history.push('/cart'))
         .catch((response) => {
           console.log('request failed', response)
         });
 }
 
-export const updateCart = (cart) => ({
-   type: ActionTypes.UPDATE_CART,
-   payload: cart
-})
+
+export const updateCart = (id, quantity) => (dispatch) => {
+  var urlwithid = '/products/updatecart/' + id + '/?quantity=' + quantity;
+  return axios({
+        method: 'PUT',
+        url: urlwithid
+        })
+        .then(dispatch(cartLoading()))
+        .then(dispatch(fetchCart()))
+        .then(history.push('/cart'))
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}

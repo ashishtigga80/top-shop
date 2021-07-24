@@ -9,14 +9,14 @@ var cartTotal = (cart) => {
   return total  
 }
 
-module.exports.viewcart = (req,res ) => {
-  Cart.findOne({userId: req.user._id},function(err, cart) {
+module.exports.viewcart = async (req,res ) => {
+  await Cart.findOne({userId: req.user._id},function(err, cart) {
     res.send(cart)
   });
 }
 
-module.exports.addtocart = (req, res) => {
-  Cart.findOne({userId: req.user._id},async function(err, cart) {
+module.exports.addtocart = async (req, res) => {
+  await Cart.findOne({userId: req.user._id}, async function(err, cart) {
     if (err) {
       return res.status(500).send({errMsg: 'Internal server error'})
     }
@@ -30,32 +30,32 @@ module.exports.addtocart = (req, res) => {
       cart.products.push({ productId: req.params.id, name: product.name, quantity: 1, price: product.price})
     }
     cart.cartTotal = cartTotal(cart)
-    cart.save();
-    res.status(204).send(cart);
+    await cart.save();
+    res.status(204).send();
   });
 }
 
-module.exports.deletefromcart = (req, res) => {
-  Cart.findOne({userId: req.user._id},async function(err, cart) {
+module.exports.deletefromcart = async (req, res) => {
+  await Cart.findOne({userId: req.user._id},async function(err, cart) {
     index = cart.products.findIndex(x => x.productId === req.params.id)
     if( index > -1){
       cart.products.splice(index, 1);
       cart.cartTotal = cartTotal(cart)
     }  
     await cart.save();
-    res.status(204).send(cart);
+    res.status(204).send();
   });
   
 }
 
 module.exports.updatecart = async (req, res) => {
-  Cart.findOne({userId: req.user._id},function(err, cart) {
+  await Cart.findOne({userId: req.user._id}, async function(err, cart) {
     index = cart.products.findIndex(x => x.productId === req.params.id)
     if( index > -1){
       cart.products[index].quantity = req.query.quantity
       cart.cartTotal = cartTotal(cart)
     }  
-    cart.save();
-    res.status(204).send(cart);
+    await cart.save();
+    res.status(204).send();
   });
 }

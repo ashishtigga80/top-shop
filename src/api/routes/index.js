@@ -1,6 +1,6 @@
 const express = require('express');
-const connectEnsureLogin = require('connect-ensure-login');
-const { login, logout, signup, checkauth} = require('../controllers/auth');
+const { login,  signup} = require('../controllers/auth');
+const {auth} = require('../middlewares/auth');
 const {viewproducts} = require('../controllers/products');
 const { viewcart,addtocart, deletefromcart, updatecart} = require('../controllers/cart');
 const {checkout, checkoutpay} = require('../controllers/checkout');
@@ -11,21 +11,20 @@ var router = express.Router();
 router.use(express.urlencoded({ extended: true }))
 router.use(express.json());
 
-router.get('/api/auth', checkauth)
+
 router.post('/login', login)
-router.post('/logout',logout)
 router.post('/signup', signup)
 
 router.get('/products', viewproducts)
 
-router.get('/cart',connectEnsureLogin.ensureLoggedIn('/login'), viewcart)
-router.post('/products/addtocart/:id',connectEnsureLogin.ensureLoggedIn('/login'), addtocart)
-router.delete('/products/deletefromcart/:id',connectEnsureLogin.ensureLoggedIn('/login'), deletefromcart)
-router.put('/products/updatecart/:id',connectEnsureLogin.ensureLoggedIn('/login'), updatecart)
+router.get('/cart',auth, viewcart)
+router.post('/products/addtocart/:id',auth, addtocart)
+router.delete('/products/deletefromcart/:id',auth, deletefromcart)
+router.put('/products/updatecart/:id',auth, updatecart)
 
-router.get('/cart/checkout',connectEnsureLogin.ensureLoggedIn('/login'), checkout)
-router.post('/cart/checkout/pay',connectEnsureLogin.ensureLoggedIn('/login'), checkoutpay)
+router.get('/cart/checkout',auth, checkout)
+router.post('/cart/checkout/pay',auth, checkoutpay)
 
-router.get('/orders',connectEnsureLogin.ensureLoggedIn('/login'), myorders)
+router.get('/orders',auth, myorders)
 
 module.exports = router;

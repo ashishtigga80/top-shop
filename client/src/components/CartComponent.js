@@ -1,13 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Card,Spinner,Button,  Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
 import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
-
-  useEffect(() => {
-    props.fetchCart();
-  },[]);
 
   const Checkout = () => {
     if(props.cart.cart.products.length === 0){
@@ -53,18 +49,18 @@ const Cart = (props) => {
                 <Row className="Row-padding">
                   <Col md={2}>
                     <InputGroup size="sm">
-                      <Button variant="outline-dark" id="button-addon1">
+                      <Link to={'/products/updatecart/' + product.productId + '?quantity=' + (product.quantity-1)}><Button variant="outline-dark" id="button-addon1">
                         -
-                      </Button>
+                      </Button></Link>
                       <FormControl
                         aria-label="Example text with button addon"
                         aria-describedby="basic-addon1"
                         placeholder={product.quantity}
                         disabled
                       />
-                      <Button variant="outline-dark" id="button-addon2">
+                      <Link to={'/products/updatecart/' + product.productId + '?quantity=' + (product.quantity+1)}><Button variant="outline-dark" id="button-addon2">
                         +
-                      </Button>
+                      </Button></Link>
                     </InputGroup>
                   </Col>
                 </Row>

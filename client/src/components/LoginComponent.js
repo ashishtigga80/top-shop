@@ -6,7 +6,7 @@ const Login = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    props.login(event.target.username.value, event.target.password.value)
+    props.login(event.target.email.value, event.target.password.value)
 
   }
   return(
@@ -18,8 +18,8 @@ const Login = (props) => {
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="username">Email address</Form.Label >
-                    <Form.Control id="username" name="username" type="email" placeholder="Enter email" required/>
+                    <Form.Label htmlFor="email">Email address</Form.Label >
+                    <Form.Control id="email" name="email" type="email" placeholder="Enter email" required/>
                   </Form.Group>
 
                   <Form.Group className="mb-3" >

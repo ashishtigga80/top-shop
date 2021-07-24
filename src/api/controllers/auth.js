@@ -1,76 +1,89 @@
 const passport = require('passport');
 const User = require('../../models/user');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const config = require("../../config/index")
 const Cart = require('../../models/cart');
-const connectEnsureLogin = require('connect-ensure-login');
 
 module.exports.login = async (req, res) => {
-  await passport.authenticate('local',(err, user) => {
-    if (err) {
-      return res.status(500).send({errMsg: 'Internal server error'})
-    }
+  
+  const email = req.body.email;
+  const password = req.body.password;
+
+  // Find user by email
+  User.findOne({ email }).then(user => {
+    // Check if user exists
     if (!user) {
-      return res.status(401).send({errMsg: 'Incorrect email or password.'});
+      return res.status(404).json({ emailnotfound: "Email not found" });
     }
-    req.logIn(user, function(err) {
-      if (err) {
-        return res.status(500).send({errMsg: 'Internal server error'})
+
+    // Check password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        // User matched
+        // Create JWT Payload
+        const payload = {
+          id: user.id,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email
+        };
+
+        // Sign token
+        jwt.sign(
+          payload,
+          config.key,
+          {
+            expiresIn: 556926 // 1 year in seconds
+          },
+          (err, token) => {
+             return res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          }
+        );
+      } else {
+        return res
+          .status(400)
+          .json({ passwordincorrect: "Password incorrect" });
       }
-      var userdata = {
-        _id: user._id,
-        username: user.username,
-        firstname: user.firstname,
-        lastname: user.lastname
-      }
-     res.status(200).send(userdata);
     });
-  })(req, res);
+  });
+
 }
 
-module.exports.logout = (req, res) => {
-   req.session.destroy(function (err) {
-    if (err) {
-      return res.status(500).send({errMsg: 'Internal server error'})
-    }
-    res.status(204).send(); 
-  });
-}  
-
 module.exports.signup = (req, res) => {
-  User.register({ username:req.body.username,firstname:req.body.firstname, lastname:req.body.lastname},req.body.password, async function(err,user){
-    if (err) {
-      return res.status(500).send({errMsg: 'Internal server error'})
-    }
-    else{
-      var cart = new Cart({
-        userId : user._id,
-        products: [],
-        cartTotal: 0
-      })
-      await cart.save(async function (err, cart) {
-        if (err) {
-          console.log(err)
-          return res.status(500).send({errMsg: 'Internal server error'})
-        }
-        else{
-          await passport.authenticate("local")(req,res,function(){
-            userdata = {
-                _id: user._id,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname
-              }
-            res.status(200).send(userdata);
-          });
-        }
-      })
+
+  User.findOne({ email: req.body.email }).then(user => {
+    if (user) {
+      return res.status(400).json({ email: "Email already exists" });
+    } else {
+      const newUser = new User({
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        email: req.body.email,
+        password: req.body.password
+      });
+
+      // Hash password before saving in database
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt,async (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          var cart = new Cart({
+            userId : newUser._id,
+            products: [],
+            cartTotal: 0
+          })
+          await cart.save();
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err));
+        });
+      });
     }
   });
 } 
 
-module.exports.checkauth =  (req, res) => {
-  if(req.user)
-    return res.send({auth: true, user : req.user})
-  else{
-    return res.send({auth: false})
-  }  
-}

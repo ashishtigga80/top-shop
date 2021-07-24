@@ -4,15 +4,8 @@ const cors = require('cors');
 const config = require('./config/index'); 
 const routes = require('./api/routes/index');
 const passport = require('passport');
-const User = require('./models/user');
 const path = require('path');
-
-const expressSession = require('express-session')({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false
-  
-});
+require("./config/passport")(passport);
 
 const app = express();
 
@@ -29,14 +22,8 @@ app.use(
 app.use(express.static(__dirname + '/../client/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(expressSession);
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(routes);
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(passport.initialize());
 
 const startServer = async () => {
 
