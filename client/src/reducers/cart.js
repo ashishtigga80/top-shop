@@ -6,9 +6,11 @@ export const Cart = (state = {
    }, action) => {
    switch(action.type){
       case ActionTypes.ADD_CART:
-         return {...state, isLoading: false, cart: action.payload};
+        return {...state, isLoading: false, cart: action.payload};
       case ActionTypes.CART_LOADING:
-         return {...state, isLoading: true,  cart: {}};   
+        return {...state, isLoading: true,  cart: {}};
+      case ActionTypes.UPDATE_CART:
+        return {...state, isLoading: true,  cart: action.payload};     
       default: 
          return state;
    }

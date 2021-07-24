@@ -28,7 +28,7 @@ const ProductDetail = (props) => {
                 <Card.Subtitle className="mb-2 text-muted">₹{product.price}</Card.Subtitle>
                 <Card.Text>{product.description}
                 </Card.Text>
-                <Link to="/home"><Button variant="outline-dark">Add to Cart</Button></Link>{' '}
+                <Link to={"/products/addtocart/" + product._id}><Button variant="outline-dark">Add to Cart</Button></Link>{' '}
                 <Link to="/cart"><Button variant="outline-dark">View Cart</Button></Link>
               </Card.Body>
             </Card>

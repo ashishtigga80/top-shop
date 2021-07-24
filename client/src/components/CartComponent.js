@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Card,Spinner,Button,  Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
 import Header from './HeaderComponent';
+import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
 
@@ -67,7 +68,7 @@ const Cart = (props) => {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Button variant="outline-dark">Delete</Button>
+                <Link to={"/products/deletefromcart/" + product.productId}><Button variant="outline-dark">Delete</Button></Link>
               </Card.Body>
             </Card>
           </Col>

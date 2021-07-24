@@ -47,7 +47,7 @@ const startServer = async () => {
     console.log('DB connection failed!' + err);
   }
 
-  app.get('/p', (req,res) =>{
+  app.get('/*', (req,res) =>{
     res.sendFile(path.join(__dirname+'/../client/public/index.html'));
   });
 

@@ -118,3 +118,34 @@ export const addCart = (cart) => ({
 export const cartLoading = () => ({
    type: ActionTypes.CART_LOADING
 })
+
+export const addtoCart = (id) => (dispatch) => {
+  var urlwithid = '/products/addtocart/' + id 
+  return app({
+        method: 'POST',
+        url: urlwithid
+        })
+        .then( response => dispatch(updateCart(response.data)))
+        .then(history.push('/cart'))
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
+export const deletefromCart = (id) => (dispatch) => {
+  var urlwithid = '/products/deletefromcart/' + id 
+  return app({
+        method: 'DELETE',
+        url: urlwithid
+        })
+        .then( response => dispatch(updateCart(response.data)))
+        .then(history.push('/cart'))
+        .catch((response) => {
+          console.log('request failed', response)
+        });
+}
+
+export const updateCart = (cart) => ({
+   type: ActionTypes.UPDATE_CART,
+   payload: cart
+})

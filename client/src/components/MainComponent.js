@@ -8,9 +8,9 @@ import Products from './ProductsComponent';
 import Logout from './LogoutComponent';
 import Cart from './CartComponent';
 import ProductDetail from './ProductDetailComponent';
-
-import { fetchProducts, login, isAuthenticated, signup, logout, fetchCart} from '../redux/ActionCreator';
-
+import AddtoCart from './AddtoCartComponent';
+import DeletefromCart from './DeletefromCartComponent'
+import { fetchProducts, login, isAuthenticated, signup, logout, fetchCart, addtoCart, deletefromCart} from '../redux/ActionCreator';
 
 const mapStateToProps = state => {
   return {
@@ -26,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
   logout: () => {dispatch(logout())},
   fetchProducts: () => {dispatch(fetchProducts())},
   fetchCart: () => {dispatch(fetchCart())},
+  addtoCart: (id) => {dispatch(addtoCart(id))},
+  deletefromCart: (id) => {dispatch(deletefromCart(id))},
   isAuthenticated: () => {dispatch(isAuthenticated())}
 });
 
@@ -55,8 +57,10 @@ class Main extends Component{
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
-          <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products}  user = {this.props.user}/>}/>
-          <Route path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> : <Redirect to='/login' /> )} />
+          <Route exact path='/products/:id' render={props => (this.isLoggedIn() ? <ProductDetail products={this.props.products}  user = {this.props.user}/> : <Redirect to='/login' /> )} />
+          <Route exact path='/cart' render={props => (this.isLoggedIn() ? <Cart fetchCart ={this.props.fetchCart} cart={this.props.cart} user = {this.props.user}/> : <Redirect to='/login' /> )} />
+          <Route exact path='/products/addtocart/:id' render={props => (this.isLoggedIn() ? <AddtoCart addtoCart ={this.props.addtoCart}/> : <Redirect to='/login' /> )} />
+          <Route exact path='/products/deletefromcart/:id' render={props => (this.isLoggedIn() ? <DeletefromCart deletefromCart ={this.props.deletefromCart}/> : <Redirect to='/login' /> )} />
           <Redirect to="/home" />
         </Switch>
       </>

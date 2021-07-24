@@ -31,20 +31,21 @@ module.exports.addtocart = (req, res) => {
     }
     cart.cartTotal = cartTotal(cart)
     cart.save();
+    res.status(204).send(cart);
   });
-  res.status(204).send();
 }
 
-module.exports.deletefromcart = async (req, res) => {
-  Cart.findOne({userId: req.user._id},function(err, cart) {
+module.exports.deletefromcart = (req, res) => {
+  Cart.findOne({userId: req.user._id},async function(err, cart) {
     index = cart.products.findIndex(x => x.productId === req.params.id)
     if( index > -1){
       cart.products.splice(index, 1);
       cart.cartTotal = cartTotal(cart)
     }  
-    cart.save();
+    await cart.save();
+    res.status(204).send(cart);
   });
-  res.status(204).send();
+  
 }
 
 module.exports.updatecart = async (req, res) => {
@@ -55,6 +56,6 @@ module.exports.updatecart = async (req, res) => {
       cart.cartTotal = cartTotal(cart)
     }  
     cart.save();
+    res.status(204).send(cart);
   });
-  res.status(204).send();
 }
