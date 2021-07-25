@@ -100,6 +100,7 @@ export const productsLoading = () => ({
 export const fetchCart = () => (dispatch) => {
 
   return axios.get('/cart')
+        .then(dispatch(cartLoading()))
         .then(response => dispatch(addCart(response.data)))
         .catch((response) => {
           console.log('request failed', response)
