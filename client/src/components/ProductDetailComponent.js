@@ -4,7 +4,13 @@ import Header from './HeaderComponent';
 import { useParams, Link } from "react-router-dom";
 
 const ProductDetail = (props) => {
+
   var { id } = useParams();
+
+  const AddtoCart = (productId) => {
+      props.addtoCart(productId)
+  }
+
   if(props.products.isLoading) {
     return(
       <div >
@@ -16,6 +22,7 @@ const ProductDetail = (props) => {
   else{
     
     var product = props.products.products.find(x => x._id === id)
+
     return(
       <>
       <Header user = {props.user}/>  
@@ -28,7 +35,7 @@ const ProductDetail = (props) => {
                 <Card.Subtitle className="mb-2 text-muted">₹{product.price}</Card.Subtitle>
                 <Card.Text>{product.description}
                 </Card.Text>
-                <Link to={"/products/addtocart/" + product._id}><Button variant="outline-dark">Add to Cart</Button></Link>{' '}
+                <Button variant="outline-dark" onClick={() => AddtoCart(product._id)}>Add to Cart</Button>{' '}
                 <Link to="/cart"><Button variant="outline-dark">View Cart</Button></Link>
               </Card.Body>
             </Card>

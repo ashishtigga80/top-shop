@@ -123,12 +123,17 @@ export const addtoCart = (id) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
-        .then(dispatch(fetchCart()))
+        .then(response => dispatch(addtoCartState(response.data)))
         .then(history.push('/cart'))
         .catch((res) => {
           console.log('request failed', res)
         });
 }
+
+export const addtoCartState =  (product) => ({
+  type:ActionTypes.ADD_TO_CART,
+  payload: product
+})
 
 export const deletefromCart = (id) => (dispatch) => {
   var urlwithid = '/products/deletefromcart/' + id 
@@ -137,12 +142,17 @@ export const deletefromCart = (id) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
-        .then(dispatch(fetchCart()))
+        .then(response => dispatch(deletefromCartState(response.data)))
         .then(history.push('/cart'))
         .catch((response) => {
           console.log('request failed', response)
         });
 }
+
+export const deletefromCartState =  (product) => ({
+  type:ActionTypes.DELETE_FROM_CART,
+  payload: product
+})
 
 
 export const updateCart = (id, quantity) => (dispatch) => {
@@ -152,12 +162,17 @@ export const updateCart = (id, quantity) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
-        .then(dispatch(fetchCart()))
+        .then(response => dispatch(updateCartState(response.data)))
         .then(history.push('/cart'))
         .catch((response) => {
           console.log('request failed', response)
         });
 }
+
+export const updateCartState =  (product) => ({
+  type:ActionTypes.UPDATE_CART,
+  payload: product
+})
 
 export const checkout = (id, source) => dispatch => {
     axios.post(`/cart/checkout/pay/${id}`, {source})

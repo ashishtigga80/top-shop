@@ -5,6 +5,19 @@ import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
 
+  const DeletefromCart = (productId) => {
+    console.log("DELETE FROM cart" + productId)
+    props.deletefromCart(productId)
+  }
+
+  const UpdateCart = (productId, quantity) => {
+    if(quantity === 0 ){
+      props.deletefromCart(productId)
+    }else{
+      props.updateCart(productId, quantity)
+    }
+  }
+
   const Checkout = () => {
     if(props.cart.cart.products.length === 0){
       return(<div></div>)
@@ -49,22 +62,22 @@ const Cart = (props) => {
                 <Row className="Row-padding">
                   <Col md={2}>
                     <InputGroup size="sm">
-                      <Link to={'/products/updatecart/' + product.productId + '?quantity=' + (product.quantity-1)}><Button variant="outline-dark" id="button-addon1">
+                      <Button variant="outline-dark" id="button-addon1" onClick={() => UpdateCart(product.productId, product.quantity--)}>
                         -
-                      </Button></Link>
+                      </Button>
                       <FormControl
                         aria-label="Example text with button addon"
                         aria-describedby="basic-addon1"
                         placeholder={product.quantity}
                         disabled
                       />
-                      <Link to={'/products/updatecart/' + product.productId + '?quantity=' + (product.quantity+1)}><Button variant="outline-dark" id="button-addon2">
+                      <Button variant="outline-dark" id="button-addon2" onClick={() => UpdateCart(product.productId, product.quantity++)}>
                         +
-                      </Button></Link>
+                      </Button>
                     </InputGroup>
                   </Col>
                 </Row>
-                <Link to={"/products/deletefromcart/" + product.productId}><Button variant="outline-dark">Delete</Button></Link>
+                <Button variant="outline-dark" onClick={() => DeletefromCart(product.productId)}>Delete</Button>
               </Card.Body>
             </Card>
           </Col>

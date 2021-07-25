@@ -64,11 +64,9 @@ class Main extends Component{
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
-          <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products}  user = {this.props.user}/>}/>
-          <PrivateRoute exact path='/cart' component={() => <Cart cart={this.props.cart} user = {this.props.user}/> }/>
-          <PrivateRoute path='/products/addtocart/:id' component={() => <AddtoCart addtoCart ={this.props.addtoCart}/> }/>
-          <PrivateRoute path='/products/deletefromcart/:id' component={() => <DeletefromCart deletefromCart ={this.props.deletefromCart}/> }/>
-          <PrivateRoute path='/products/updatecart/:id' component={() => <UpdateCart updateCart ={this.props.updateCart}/> }/>
+          <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products} addtoCart = {this.props.addtoCart} user = {this.props.user}/>}/>
+          <PrivateRoute exact path='/cart' component={() => <Cart cart={this.props.cart} fetchCart = {this.props.fetchCart} user = {this.props.user}
+                                                                  deletefromCart ={this.props.deletefromCart}  updateCart ={this.props.updateCart} /> }/>
           <PrivateRoute exact path='/cart/checkout' component={() => <Checkout cart={this.props.cart} user = {this.props.user} checkout={this.props.checkout}/> }/>
           <PrivateRoute exact path='/orders' component={() => <Order order={this.props.order} user = {this.props.user}/> }/>
           <PrivateRoute exact path='/orders/:id' component={() => <OrderDetail order={this.props.order} user = {this.props.user}/> }/>

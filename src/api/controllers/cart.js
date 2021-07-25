@@ -23,15 +23,17 @@ module.exports.addtocart = async (req, res) => {
     let index= cart.products.findIndex(x => x.productId === req.params.id)
     if(index>-1){
       cart.products[index].quantity++
+      cart.cartTotal = cartTotal(cart)
     }else{
       var product = await Product.findOne({_id: req.params.id},function(err, product) {
         return product
       })
       cart.products.push({ productId: req.params.id, name: product.name, quantity: 1, price: product.price})
+      cart.cartTotal = cartTotal(cart)
     }
-    cart.cartTotal = cartTotal(cart)
     await cart.save();
-    res.status(204).send();
+    res.send(cart);
+    
   });
 }
 
@@ -43,7 +45,7 @@ module.exports.deletefromcart = async (req, res) => {
       cart.cartTotal = cartTotal(cart)
     }  
     await cart.save();
-    res.status(204).send();
+    res.send(cart);
   });
   
 }
@@ -56,6 +58,7 @@ module.exports.updatecart = async (req, res) => {
       cart.cartTotal = cartTotal(cart)
     }  
     await cart.save();
-    res.status(204).send();
+    console.log(cart)
+    res.send(cart);
   });
 }

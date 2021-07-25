@@ -66,8 +66,8 @@ const OrderDetail = (props) => {
                 <Card.Subtitle className="mb-2 text-muted">{order.firstname} {order.lastname}</Card.Subtitle>
                 <Row className="Row-padding">
                   <Col>
-                    <Card.Text><p>{order.address.line1}, {order.address.street}, {order.address.city}</p></Card.Text>
-                    <Card.Text><p>{order.address.state}, {order.address.country}, {order.address.pincode}</p></Card.Text>
+                    <Card.Text>{order.address.line1}, {order.address.street}, {order.address.city}</Card.Text>
+                    <Card.Text>{order.address.state}, {order.address.country}, {order.address.pincode}</Card.Text>
                   </Col>
                 </Row>
                 <Row className="Row-padding">
