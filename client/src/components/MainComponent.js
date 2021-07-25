@@ -15,6 +15,7 @@ import PrivateRoute from './PrivateRouteComponent';
 import UpdateCart from './UpdateCartComponent';
 import Checkout from './CheckoutComponent';
 import Order from './OrderComponent';
+import OrderDetail from './OrderDetailComponent';
 
 import { fetchProducts, login, signup, logout, fetchCart, addtoCart, deletefromCart, updateCart, checkout, fetchOrders} from '../redux/ActionCreator';
 
@@ -70,6 +71,7 @@ class Main extends Component{
           <PrivateRoute path='/products/updatecart/:id' component={() => <UpdateCart updateCart ={this.props.updateCart}/> }/>
           <PrivateRoute exact path='/cart/checkout' component={() => <Checkout cart={this.props.cart} user = {this.props.user} checkout={this.props.checkout}/> }/>
           <PrivateRoute exact path='/orders' component={() => <Order order={this.props.order} user = {this.props.user}/> }/>
+          <PrivateRoute exact path='/orders/:id' component={() => <OrderDetail order={this.props.order} user = {this.props.user}/> }/>
           <Redirect to="/home" />
         </Switch>
       </>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Spinner,Button,  Row, Col, Container} from 'react-bootstrap';
+import {Card,Spinner, Row, Col, Container} from 'react-bootstrap';
 import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const Order = (props) => {
           <Col md={12}>
             <Card>
               <Card.Body>
-                <Card.Title>{order._id}</Card.Title>
+                <Card.Title>Order Id - <Link to={"/orders/" + order._id}>{order._id}</Link></Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">Status: {order.status}</Card.Subtitle>
               </Card.Body>
             </Card>
