@@ -30,11 +30,8 @@ export const login = (email,password) => (dispatch) => {
           password : password
         }
         })
+        .then(dispatch(userLoading()))
         .then(res => {
-          // Save to localStorage
-
-          // Set token to localStorage
-          console.log(res)
           const { token } = res.data;
           localStorage.setItem("jwtToken", token);
           // Set token to Auth header
@@ -50,6 +47,9 @@ export const login = (email,password) => (dispatch) => {
         });
 }
 
+export const userLoading = () => ({
+   type: ActionTypes.USER_LOADING
+})
 
 export const logout = () => (dispatch) => {
   // Remove token from local storage

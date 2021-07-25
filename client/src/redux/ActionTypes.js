@@ -1,4 +1,5 @@
 export const DO_LOGIN = 'DO_LOGIN';
+export const USER_LOADING = 'USER_LOADINGS';
 export const DO_LOGOUT = 'DO_LOGOUT';
 export const ADD_PRODUCTS = 'ADD_PRODUCTS';
 export const PRODUCTS_LOADING = 'PRODUCTS_LOADING';
@@ -8,4 +9,4 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const UPDATE_CART = 'UPDATE_CART';
 export const ADD_ORDERS = 'ADD_ORDERS';
-export const ORDERS_LOADING = 'ORDER_LOADINGS';
+export const ORDERS_LOADING = 'ORDER_LOADING';
