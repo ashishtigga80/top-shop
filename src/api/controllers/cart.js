@@ -58,7 +58,6 @@ module.exports.updatecart = async (req, res) => {
       cart.cartTotal = cartTotal(cart)
     }  
     await cart.save();
-    console.log(cart)
     res.send(cart);
   });
 }

@@ -62,7 +62,7 @@ const Cart = (props) => {
                 <Row className="Row-padding">
                   <Col md={2}>
                     <InputGroup size="sm">
-                      <Button variant="outline-dark" id="button-addon1" onClick={() => UpdateCart(product.productId, product.quantity--)}>
+                      <Button variant="outline-dark" id="button-addon1" onClick={() => UpdateCart(product.productId, product.quantity-1)}>
                         -
                       </Button>
                       <FormControl
@@ -71,7 +71,7 @@ const Cart = (props) => {
                         placeholder={product.quantity}
                         disabled
                       />
-                      <Button variant="outline-dark" id="button-addon2" onClick={() => UpdateCart(product.productId, product.quantity++)}>
+                      <Button variant="outline-dark" id="button-addon2" onClick={() => UpdateCart(product.productId, product.quantity+1)}>
                         +
                       </Button>
                     </InputGroup>
