@@ -4,3 +4,5 @@ export const ADD_PRODUCTS = 'ADD_PRODUCTS';
 export const PRODUCTS_LOADING = 'PRODUCTS_LOADING';
 export const ADD_CART = 'ADD_CART';
 export const CART_LOADING = 'CART_LOADING';
+export const ADD_ORDERS = 'ADD_ORDERS';
+export const ORDERS_LOADING = 'ORDER_LOADINGS';

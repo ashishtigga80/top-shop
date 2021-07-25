@@ -79,6 +79,7 @@ export const doLogout = () => ({
 export const fetchProducts = () => (dispatch) => {
   
   return axios.get('/products')
+        .then(dispatch(productsLoading()))
         .then(response => dispatch(addProducts(response.data)))
         .catch((response) => {
           console.log('request failed', response)
@@ -156,3 +157,30 @@ export const updateCart = (id, quantity) => (dispatch) => {
           console.log('request failed', response)
         });
 }
+
+export const checkout = (id, source) => dispatch => {
+    axios.post(`/cart/checkout/pay/${id}`, {source})
+        .then(res => console.log(res))
+        .then(dispatch(fetchOrders()))
+        .then(history.push('/home'))
+        .catch(err => console.log(err));
+}
+
+export const fetchOrders = () => (dispatch) => {
+
+  return axios.get('/orders')
+        .then(dispatch(ordersLoading()))
+        .then(response => dispatch(addOrders(response.data)))
+        .catch((response) => {
+          console.log('request failed', response)
+  });
+}
+
+export const addOrders= (orders) => ({
+   type: ActionTypes.ADD_ORDERS,
+   payload: orders
+})
+
+export const ordersLoading = () => ({
+   type: ActionTypes.ORDERS_LOADING
+})

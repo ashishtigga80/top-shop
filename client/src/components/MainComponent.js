@@ -14,15 +14,17 @@ import DeletefromCart from './DeletefromCartComponent'
 import PrivateRoute from './PrivateRouteComponent';
 import UpdateCart from './UpdateCartComponent';
 import Checkout from './CheckoutComponent';
+import Order from './OrderComponent';
 
-import { fetchProducts, login, signup, logout, fetchCart, addtoCart, deletefromCart, updateCart} from '../redux/ActionCreator';
+import { fetchProducts, login, signup, logout, fetchCart, addtoCart, deletefromCart, updateCart, checkout, fetchOrders} from '../redux/ActionCreator';
 
 
 const mapStateToProps = state => {
   return {
     products: state.products,
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    order: state.order
   }
 }
 
@@ -31,10 +33,12 @@ const mapDispatchToProps = dispatch => ({
   signup: (firstname, lastname, email, password) => {dispatch(signup(firstname, lastname, email, password))},
   logout: () => {dispatch(logout())},
   fetchProducts: () => {dispatch(fetchProducts())},
+  fetchOrders: () => {dispatch(fetchOrders())},
   fetchCart: () => {dispatch(fetchCart())},
   addtoCart: (id) => {dispatch(addtoCart(id))},
   deletefromCart: (id) => {dispatch(deletefromCart(id))},
   updateCart: (id, quantity) => {dispatch(updateCart(id, quantity))},
+  checkout: (id, token) => {dispatch(checkout(id, token))}
 });
 
 class Main extends Component{
@@ -45,6 +49,7 @@ class Main extends Component{
   
   componentDidMount() {
     this.props.fetchProducts();
+    this.props.fetchOrders();
     this.props.fetchCart();
   }
 
@@ -63,7 +68,8 @@ class Main extends Component{
           <PrivateRoute path='/products/addtocart/:id' component={() => <AddtoCart addtoCart ={this.props.addtoCart}/> }/>
           <PrivateRoute path='/products/deletefromcart/:id' component={() => <DeletefromCart deletefromCart ={this.props.deletefromCart}/> }/>
           <PrivateRoute path='/products/updatecart/:id' component={() => <UpdateCart updateCart ={this.props.updateCart}/> }/>
-          <PrivateRoute exact path='/cart/checkout' component={() => <Checkout cart={this.props.cart} user = {this.props.user}/> }/>
+          <PrivateRoute exact path='/cart/checkout' component={() => <Checkout cart={this.props.cart} user = {this.props.user} checkout={this.props.checkout}/> }/>
+          <PrivateRoute exact path='/orders' component={() => <Order order={this.props.order} user = {this.props.user}/> }/>
           <Redirect to="/home" />
         </Switch>
       </>

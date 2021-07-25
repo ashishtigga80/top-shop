@@ -2,6 +2,7 @@ import React from 'react';
 import {Card,Spinner,Button,  Row, Col, Container, Form} from 'react-bootstrap';
 import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
+import Stripe from './Stripe'
 
 const Checkout = (props) => {
 
@@ -91,7 +92,7 @@ const Checkout = (props) => {
             <Card border="dark">
               <Card.Body>
                 <Card.Subtitle className="mb-2 text-muted">Total: ₹{props.cart.cart.cartTotal}</Card.Subtitle>
-                <Link to="/cart/checkout/pay"><Button variant="outline-dark">Proceed to Payment</Button></Link>
+                <Stripe amount = {props.cart.cart.cartTotal} user = {props.user.user._id} checkout={props.checkout}/>
               </Card.Body>
             </Card>
           </Col>  

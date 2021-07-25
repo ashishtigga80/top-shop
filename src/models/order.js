@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     userId: {
       type: String,
-      unique: true,
+      required: true
+    },
+    paymentId: {
+      type: String,
       required: true
     },
     firstname: {
