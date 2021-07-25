@@ -9,10 +9,7 @@ import Products from './ProductsComponent';
 import Logout from './LogoutComponent';
 import Cart from './CartComponent';
 import ProductDetail from './ProductDetailComponent';
-import AddtoCart from './AddtoCartComponent';
-import DeletefromCart from './DeletefromCartComponent'
 import PrivateRoute from './PrivateRouteComponent';
-import UpdateCart from './UpdateCartComponent';
 import Checkout from './CheckoutComponent';
 import Order from './OrderComponent';
 import OrderDetail from './OrderDetailComponent';
