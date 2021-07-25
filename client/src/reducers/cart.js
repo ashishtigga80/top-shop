@@ -2,7 +2,8 @@ import * as ActionTypes from '../redux/ActionTypes';
 
 export const Cart = (state = {
     isLoading: true,
-    cart : {}
+    cart : {},
+    shippingdetails: {}
    }, action) => {
    switch(action.type){
       case ActionTypes.ADD_CART:
@@ -15,6 +16,10 @@ export const Cart = (state = {
         return {...state, isLoading: false, cart: action.payload};  
       case ActionTypes.UPDATE_CART:
         return {...state, isLoading: false, cart: action.payload};
+      case ActionTypes.SHIPPING_DETAIL:
+        return {...state, isLoading: false, shippingdetails: action.payload};  
+      case ActionTypes.ORDER_CART_UPDATE:
+        return {...state, isLoading: false, cart: action.payload, shippingdetails: {}};    
       default: 
          return state;
    }

@@ -45,7 +45,7 @@ module.exports.checkoutpay = async (req,res) => {
                 await cart.save(function(err,cart) {
                   if (err) return console.error(err);
                 }) 
-                return res.status(201).send(order);
+                return res.status(201).send({order,cart});
             }
         }
         else{

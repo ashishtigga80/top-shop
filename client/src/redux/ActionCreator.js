@@ -4,6 +4,8 @@ import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 
+
+
 export const signup = (firstname, lastname, email, password) => (dispatch) => {
   return axios({
         method: 'POST',
@@ -76,6 +78,7 @@ export const doLogout = () => ({
 
 
 
+
 export const fetchProducts = () => (dispatch) => {
   
   return axios.get('/products')
@@ -94,6 +97,10 @@ export const addProducts = (products) => ({
 export const productsLoading = () => ({
    type: ActionTypes.PRODUCTS_LOADING
 })
+
+
+
+
 
 
 
@@ -130,9 +137,9 @@ export const addtoCart = (id) => (dispatch) => {
         });
 }
 
-export const addtoCartState =  (product) => ({
+export const addtoCartState =  (cart) => ({
   type:ActionTypes.ADD_TO_CART,
-  payload: product
+  payload: cart
 })
 
 export const deletefromCart = (id) => (dispatch) => {
@@ -149,9 +156,9 @@ export const deletefromCart = (id) => (dispatch) => {
         });
 }
 
-export const deletefromCartState =  (product) => ({
+export const deletefromCartState =  (cart) => ({
   type:ActionTypes.DELETE_FROM_CART,
-  payload: product
+  payload: cart
 })
 
 
@@ -169,18 +176,41 @@ export const updateCart = (id, quantity) => (dispatch) => {
         });
 }
 
-export const updateCartState =  (product) => ({
+export const updateCartState =  (cart) => ({
   type:ActionTypes.UPDATE_CART,
-  payload: product
+  payload: cart
 })
 
-export const checkout = (id, source) => dispatch => {
-    axios.post(`/cart/checkout/pay/${id}`, {source})
-        .then(res => console.log(res))
-        .then(dispatch(fetchOrders()))
-        .then(history.push('/home'))
-        .catch(err => console.log(err));
+export const orderCartUpdate = (cart) => ({
+   type: ActionTypes.ORDER_CART_UPDATE,
+   payload: cart
+})
+
+
+
+
+
+
+
+
+export const shippingDetails =  (details) => ({
+  type:ActionTypes.SHIPPING_DETAIL,
+  payload: details
+})
+
+export const checkout = (id, source, shippingdetails) => dispatch => {
+    axios.post("/cart/checkout/pay", {source})
+        .then(dispatch(ordersLoading()))
+        .then((response) => {
+          dispatch(addtoOrders(response.data))
+          dispatch(orderCartUpdate(response.data.cart))
+        })
+        .then(history.push('/orders'))
+        .catch(err => console.log("This is the error",err));
 }
+
+
+
 
 export const fetchOrders = () => (dispatch) => {
 
@@ -199,4 +229,9 @@ export const addOrders= (orders) => ({
 
 export const ordersLoading = () => ({
    type: ActionTypes.ORDERS_LOADING
+})
+
+export const addtoOrders = (order) => ({
+  type: ActionTypes.ADD_TO_ORDERS,
+  payload: order
 })

@@ -22,7 +22,7 @@ router.post('/products/addtocart/:id',auth, addtocart)
 router.delete('/products/deletefromcart/:id',auth, deletefromcart)
 router.put('/products/updatecart/:id',auth, updatecart)
 
-router.post('/cart/checkout/pay/:id',auth, checkoutpay)
+router.post('/cart/checkout/pay',auth, checkoutpay)
 
 router.get('/orders',auth, myorders)
 

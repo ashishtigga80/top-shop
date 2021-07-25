@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Spinner, Row, Col, Container} from 'react-bootstrap';
+import {Card,Spinner, Row, Col, Container, Alert} from 'react-bootstrap';
 import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +13,31 @@ const Order = (props) => {
         </Spinner>
       </div>
   )}
+  else if(props.order.orders === undefined){
+    return(
+      <>
+        <Header user = {props.user}/>
+        <Container>
+        <Row className="justify-content-center">
+          <Col md={12}>
+            <Card border="dark">
+              <Card.Body>
+                <Card.Title className="title-strong">My Orders</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>  
+        </Row>
+        <Row className="justify-content-center">
+          <Col align="center">
+          <Alert variant="warning">
+            No Orders Yet!
+          </Alert>
+          </Col>
+        </Row>
+        </Container>
+      </>
+    )
+  }
   else{
     const OrderItems = props.order.orders.map((order) => {
       return(

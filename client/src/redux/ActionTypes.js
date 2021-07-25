@@ -8,5 +8,9 @@ export const CART_LOADING = 'CART_LOADING';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const UPDATE_CART = 'UPDATE_CART';
+export const SHIPPING_DETAIL = 'SHIPPING_DETAIL';
 export const ADD_ORDERS = 'ADD_ORDERS';
 export const ORDERS_LOADING = 'ORDER_LOADING';
+export const ADD_TO_ORDERS = 'ADD_TO_ORDERS';
+export const ORDER_CART_UPDATE = 'ORDER_CART_UPDATE';
+
