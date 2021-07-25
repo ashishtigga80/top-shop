@@ -199,7 +199,7 @@ export const shippingDetails =  (details) => ({
 })
 
 export const checkout = (id, source, shippingdetails) => dispatch => {
-    axios.post("/cart/checkout/pay", {source})
+    axios.post("/cart/checkout/pay", {source, shippingdetails})
         .then(dispatch(ordersLoading()))
         .then((response) => {
           dispatch(addtoOrders(response.data))

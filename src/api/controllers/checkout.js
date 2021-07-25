@@ -7,7 +7,8 @@ const stripe = require('stripe')(config.StripeAPIKey);
 
 module.exports.checkoutpay = async (req,res) => {
   try{
-        const {source} = req.body;
+        const {source, shippingdetails} = req.body;
+        console.log(shippingdetails)
         const userId = req.user._id
         let cart = await Cart.findOne({userId});
         const email = req.user.email;
@@ -23,17 +24,17 @@ module.exports.checkoutpay = async (req,res) => {
                const order = await Order.create({
                     userId: req.user._id,
                     paymentId: charge.id,
-                    firstname: 'req.body.firstname',
-                    lastname: 'req.body.lastname',
-                    contactno: 'req.body.contactno',
-                    email: 'req.body.email',
+                    firstname: shippingdetails.firstname,
+                    lastname: shippingdetails.lastname,
+                    contactno: shippingdetails.contactno,
+                    email: shippingdetails.email,
                     address: {
-                      street : 'req.body.street',
-                      line1 : 'req.body.line1',
-                      city : 'req.body.city',
-                      pincode :'req.body.pincode',
-                      state : 'req.body.state',
-                      country : 'req.body.country'
+                      street : shippingdetails.street,
+                      line1 : shippingdetails.line1,
+                      city : shippingdetails.city,
+                      pincode :shippingdetails.pincode,
+                      state : shippingdetails.state,
+                      country : shippingdetails.country
                     },
                     products: cart.products,
                     totalamount: cart.cartTotal,
