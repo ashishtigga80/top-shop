@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card,Spinner,Button,  Row, Col, Container, Form, Alert, FormControl} from 'react-bootstrap';
+import {Card,  Row, Col, Container} from 'react-bootstrap';
 import Stripe from './Stripe'
 
 const Payment = (props) => {

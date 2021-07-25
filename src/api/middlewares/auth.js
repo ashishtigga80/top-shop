@@ -18,10 +18,11 @@ exports.auth = (req,res,next) => {
              return res.status(200).redirect('/login')
 
          //verifying the token    
-         jwt.verify(token, config.key, function(err, decoded) {     
+         jwt.verify(token, config.key, function(err, decoded) {
          //if token is expired or some other error   
          if (err) 
               return res.status(500).redirect('/login');  
+          
         //sending obj id of the user in req after decoding the token        
         req.userId = decoded.id;
         User.findById(req.userId, 

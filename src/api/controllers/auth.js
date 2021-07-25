@@ -34,7 +34,7 @@ module.exports.login = async (req, res) => {
           payload,
           config.key,
           {
-            expiresIn: 556926 // 1 year in seconds
+            expiresIn: 100 
           },
           (err, token) => {
              return res.json({
