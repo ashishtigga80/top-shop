@@ -56,9 +56,9 @@ class Main extends Component{
   
   render(){
     return (
-      <div> 
+      <> 
         {
-          (this.props.location.pathname!=='/login' && this.props.location.pathname!=='/signup') ? <Header user = {this.props.user}/> :null
+          (this.props.location.pathname!=='/login' && this.props.location.pathname!=='/signup') ? <Header user = {this.props.user} error = {this.props.error}/> :null
         }
         <Switch>
           <Route exact path="/login" component={() => <Login login={this.props.login} error={this.props.error}/>}/>
@@ -75,7 +75,7 @@ class Main extends Component{
           <PrivateRoute exact path='/orders/:id' component={() => <OrderDetail order={this.props.order} user = {this.props.user}/> }/>
           <Redirect to="/home" />
         </Switch>
-      </div>
+      </>
     );
   }
 }

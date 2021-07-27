@@ -1,6 +1,7 @@
 import React from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import Error from './ErrorComponent';
 
 const Header = (props) => {
   
@@ -21,7 +22,9 @@ const Header = (props) => {
       )
     }
   }
+
   return(
+      <>
       <Navbar collapseOnSelect expand='sm' bg="dark" variant="dark">
           <Navbar.Brand to="/home">
             Shopinit
@@ -39,6 +42,8 @@ const Header = (props) => {
             </Nav>
           </Navbar.Collapse>
       </Navbar>
+      <Error error = {props.error}/>
+      </>
   );
 }
 

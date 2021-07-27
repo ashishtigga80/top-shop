@@ -46,8 +46,8 @@ export const login = (email,password) => (dispatch) => {
           localStorage.setItem("jwtToken", token);
           setAuthToken(token);
           const decoded = jwt_decode(token);
-          dispatch(doLogin(decoded));
           dispatch(clearError());
+          dispatch(doLogin(decoded));
           dispatch(fetchCart());
           dispatch(fetchOrders());
           history.push('/home');
@@ -88,9 +88,10 @@ export const fetchProducts = () => (dispatch) => {
   
   return axios.get('/products')
         .then(dispatch(productsLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(addProducts(response.data)))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          dispatch(setError(error.response.data));
   });
 }
 
@@ -113,9 +114,10 @@ export const fetchCart = () => (dispatch) => {
 
   return axios.get('/cart')
         .then(dispatch(cartLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(addCart(response.data)))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          dispatch(setError(error.response.data));
   });
 }
 
@@ -128,6 +130,8 @@ export const cartLoading = () => ({
    type: ActionTypes.CART_LOADING
 })
 
+
+
 export const addtoCart = (id) => (dispatch) => {
   var urlwithid = '/products/addtocart/' + id 
   return axios({
@@ -135,10 +139,12 @@ export const addtoCart = (id) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(addtoCartState(response.data)))
         .then(history.push('/cart'))
-        .catch((res) => {
-          console.log('request failed', res)
+        .catch((error) => {
+          history.push('/products/' + id )
+          dispatch(setError(error.response.data));
         });
 }
 
@@ -154,10 +160,13 @@ export const deletefromCart = (id) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(deletefromCartState(response.data)))
         .then(history.push('/cart'))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          history.push('/cart')
+          dispatch(fetchCart())
+          dispatch(setError(error.response.data));
         });
 }
 
@@ -174,10 +183,13 @@ export const updateCart = (id, quantity) => (dispatch) => {
         url: urlwithid
         })
         .then(dispatch(cartLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(updateCartState(response.data)))
         .then(history.push('/cart'))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          history.push('/cart')
+          dispatch(fetchCart())
+          dispatch(setError(error.response.data));
         });
 }
 
@@ -221,9 +233,10 @@ export const fetchOrders = () => (dispatch) => {
 
   return axios.get('/orders')
         .then(dispatch(ordersLoading()))
+        .then(dispatch(clearError()))
         .then(response => dispatch(addOrders(response.data)))
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          dispatch(setError(error.response.data));
   });
 }
 

@@ -5,16 +5,16 @@ import {Row, Col, Container, Alert} from 'react-bootstrap';
 
 const SlideInDownAnimation = keyframes`${slideInDown}`;
 const SlideInDownDiv = styled.div`
-  animation: 0.2s ${SlideInDownAnimation};
+  animation: 1s ${SlideInDownAnimation};
 `;
 
 const Error = (props) => {
   if(props.error.message !== '') {
     return(
       <SlideInDownDiv>
-        <Container fluid>
+        <Container>
           <Row className="justify-content-center">
-            <Col align="center" md={6}>
+            <Col align="center" md={12}>
               <Alert variant="danger">
                 {props.error.message}
               </Alert>
