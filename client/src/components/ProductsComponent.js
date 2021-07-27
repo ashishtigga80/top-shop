@@ -1,7 +1,6 @@
 import React from 'react';
 import {Container, Col, Row, Spinner, Card} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Header from './HeaderComponent';
 
 const Products = (props) => {
   if(props.products.isLoading) {
@@ -29,7 +28,6 @@ const Products = (props) => {
     });
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row>
           {products}

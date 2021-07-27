@@ -12,13 +12,15 @@ const Error = (props) => {
   if(props.error.message !== '') {
     return(
       <SlideInDownDiv>
-        <Row className="justify-content-center">
-          <Col align="center" md={6}>
-            <Alert variant="danger">
-              {props.error.message}
-            </Alert>
-          </Col>
-        </Row>
+        <Container fluid>
+          <Row className="justify-content-center">
+            <Col align="center" md={6}>
+              <Alert variant="danger">
+                {props.error.message}
+              </Alert>
+            </Col>
+          </Row>
+        </Container>
      </SlideInDownDiv>
     )
   }

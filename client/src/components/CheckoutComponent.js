@@ -1,6 +1,5 @@
 import React from 'react';
-import {Card,Spinner,Button,  Row, Col, Container, Form, Alert, FormControl} from 'react-bootstrap';
-import Header from './HeaderComponent';
+import {Card,Spinner,Button,  Row, Col, Container, Form, Alert} from 'react-bootstrap';
 import { history } from '../App';
 
 
@@ -152,7 +151,6 @@ const Checkout = (props) => {
 
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row className="justify-content-center">
           <Col md={12}>

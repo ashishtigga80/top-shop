@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 
+import Header from './HeaderComponent';
 import Home from './HomeComponent';
 import Login from './LoginComponent';
 import Signup from './SignupComponent';
@@ -44,9 +45,7 @@ const mapDispatchToProps = dispatch => ({
 
 class Main extends Component{
 
-  constructor(props){
-    super(props);
-  }
+  
   
   componentDidMount() {
     this.props.fetchProducts();
@@ -57,12 +56,15 @@ class Main extends Component{
   
   render(){
     return (
-      <> 
+      <div> 
+        {
+          (this.props.location.pathname!=='/login' && this.props.location.pathname!=='/signup') ? <Header user = {this.props.user}/> :null
+        }
         <Switch>
-          <Route exact path="/home" component={() => <Home  user = {this.props.user}/>}/>
           <Route exact path="/login" component={() => <Login login={this.props.login} error={this.props.error}/>}/>
           <Route exact path="/signup" component={() => <Signup signup={this.props.signup} error={this.props.error}/>}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
+          <Route exact path="/home" component={() => <Home  user = {this.props.user}/>}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
           <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products} addtoCart = {this.props.addtoCart} user = {this.props.user}/>}/>
           <PrivateRoute exact path='/cart' component={() => <Cart cart={this.props.cart} fetchCart = {this.props.fetchCart} user = {this.props.user}
@@ -73,7 +75,7 @@ class Main extends Component{
           <PrivateRoute exact path='/orders/:id' component={() => <OrderDetail order={this.props.order} user = {this.props.user}/> }/>
           <Redirect to="/home" />
         </Switch>
-      </>
+      </div>
     );
   }
 }

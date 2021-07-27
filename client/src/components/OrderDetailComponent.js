@@ -1,7 +1,6 @@
 import React from 'react';
-import {Container, Button, Row, Spinner, Card, Col} from 'react-bootstrap';
-import Header from './HeaderComponent';
-import { useParams, Link } from "react-router-dom";
+import {Container, Row, Spinner, Card, Col} from 'react-bootstrap';
+import { useParams} from "react-router-dom";
 import dateFormat from 'dateformat';
 
 const OrderDetail = (props) => {
@@ -38,7 +37,6 @@ const OrderDetail = (props) => {
 
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row className="justify-content-center">
           <Col md={12}>

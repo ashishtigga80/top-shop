@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, Button, Row, Spinner, Card, Col} from 'react-bootstrap';
-import Header from './HeaderComponent';
 import { useParams, Link } from "react-router-dom";
 
 const ProductDetail = (props) => {
@@ -25,7 +24,6 @@ const ProductDetail = (props) => {
 
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row className="justify-content-center">
           <Col md={12}>

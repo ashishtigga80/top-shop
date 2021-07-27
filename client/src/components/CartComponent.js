@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card,Spinner,Button,  Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
-import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
 
 const Cart = (props) => {
@@ -85,7 +84,6 @@ const Cart = (props) => {
     })
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row className="justify-content-center">
           <Col md={12}>

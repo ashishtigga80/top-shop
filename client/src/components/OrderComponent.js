@@ -1,6 +1,5 @@
 import React from 'react';
 import {Card,Spinner, Row, Col, Container, Alert} from 'react-bootstrap';
-import Header from './HeaderComponent';
 import { Link } from 'react-router-dom';
 
 const Order = (props) => {
@@ -16,7 +15,6 @@ const Order = (props) => {
   else if(props.order.orders === undefined){
     return(
       <>
-        <Header user = {props.user}/>
         <Container>
         <Row className="justify-content-center">
           <Col md={12}>
@@ -54,7 +52,6 @@ const Order = (props) => {
     })
     return(
       <>
-      <Header user = {props.user}/>  
       <Container>
         <Row className="justify-content-center">
           <Col md={12}>

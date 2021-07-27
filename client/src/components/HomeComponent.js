@@ -1,6 +1,5 @@
 import React from 'react';
 import {Alert, Row, Col, Container, Spinner} from 'react-bootstrap';
-import Header from './HeaderComponent';
 
 const Home = (props) => {
 
@@ -16,7 +15,7 @@ const Home = (props) => {
   else{
     return(
       <>
-      <Header user = {props.user}/>  
+       
       <Container>
         <Row>
           <Col>

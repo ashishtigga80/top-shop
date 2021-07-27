@@ -11,21 +11,16 @@ exports.auth = (req,res,next) => {
             return null;
         }
         var token = extractToken(req);
-        if (!token) 
-             return res.sendStatus(401);
+        if (!token) return res.sendStatus(401);
         jwt.verify(token, config.key, function(err, decoded) {
-        if (err) 
-              return res.status(500).redirect('/login');  
-          
-        //sending obj id of the user in req after decoding the token        
-        req.userId = decoded.id;
-        User.findById(req.userId, 
-                      { password: 0 }, // projection
-                      function (err, user) {
-                       if (err) return res.status(500).render('failures',{message:'Internal Server Problem.'});   
-                      if(!user) return res.status(500).render('failures',{message:'DB problem.'}); 
-                      req.user = user
-                      next();
-        })              
-  });
-}
+          if (err) 
+                return res.sendStatus(500);      
+          req.user={
+              id: decoded.id,
+              firstname: decoded.firstname,
+              lastname: decoded.lastname,
+              email: decoded.email
+            }
+          next();
+        })
+  }
