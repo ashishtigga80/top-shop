@@ -1,6 +1,7 @@
 import React from 'react';
-import {Card,Spinner,Button,  Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
+import {Card,Button,  Row, Col, Container, InputGroup, FormControl} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Loading from './LoadingComponent';
 
 const Cart = (props) => {
 
@@ -48,12 +49,7 @@ const Cart = (props) => {
   }
 
   if(props.cart.isLoading) {
-    return(
-      <div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+    return(<Loading />
   )}
   else{
     const CartItems = props.cart.cart.products.map((product) => {

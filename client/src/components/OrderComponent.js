@@ -1,6 +1,7 @@
 import React from 'react';
-import {Card,Spinner, Row, Col, Container, Alert} from 'react-bootstrap';
+import {Card, Row, Col, Container, Alert} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Loading from './LoadingComponent';
 
 const Order = (props) => {
 
@@ -17,12 +18,7 @@ const Order = (props) => {
   }
 
   if(props.order.isLoading) {
-    return(
-      <div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+    return(<Loading />
   )}
   else if(props.order.orders === undefined){
     return(

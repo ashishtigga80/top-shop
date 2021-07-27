@@ -1,15 +1,12 @@
 import React from 'react';
-import {Alert, Row, Col, Container, Spinner} from 'react-bootstrap';
+import {Alert, Row, Col, Container} from 'react-bootstrap';
+import Loading from './LoadingComponent';
 
 const Home = (props) => {
 
   if(props.user.userloading){
     return(
-      <div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+      <Loading />
     )
   }
   else{

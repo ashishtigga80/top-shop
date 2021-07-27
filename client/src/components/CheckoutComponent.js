@@ -1,16 +1,12 @@
 import React from 'react';
-import {Card,Spinner,Button,  Row, Col, Container, Form, Alert} from 'react-bootstrap';
+import {Card,Button,  Row, Col, Container, Form, Alert} from 'react-bootstrap';
 import { history } from '../App';
-
+import Loading from './LoadingComponent';
 
 const Checkout = (props) => {
 
   if(props.cart.isLoading) {
-    return(<div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>)
+    return(<Loading />)
     }
   else if(props.cart.cart.products.length === 0){
     return(

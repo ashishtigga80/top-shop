@@ -1,6 +1,7 @@
 import React from 'react';
-import {Container, Button, Row, Spinner, Card, Col} from 'react-bootstrap';
+import {Container, Button, Row, Card, Col} from 'react-bootstrap';
 import { useParams, Link } from "react-router-dom";
+import Loading from './LoadingComponent';
 
 const ProductDetail = (props) => {
 
@@ -11,12 +12,7 @@ const ProductDetail = (props) => {
   }
 
   if(props.products.isLoading) {
-    return(
-      <div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+    return(<Loading />
   )}
   else{
     

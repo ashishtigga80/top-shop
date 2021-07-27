@@ -1,17 +1,13 @@
 import React from 'react';
-import {Container, Row, Spinner, Card, Col} from 'react-bootstrap';
+import {Container, Row, Card, Col} from 'react-bootstrap';
 import { useParams} from "react-router-dom";
 import dateFormat from 'dateformat';
+import Loading from './LoadingComponent';
 
 const OrderDetail = (props) => {
   var { id } = useParams();
   if(props.order.isLoading) {
-    return(
-      <div >
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+    return(<Loading />
   )}
   else{
     var order = props.order.orders.find(x => x._id === id)
