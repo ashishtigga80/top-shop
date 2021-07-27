@@ -23,7 +23,8 @@ const mapStateToProps = state => {
     products: state.products,
     user: state.user,
     cart: state.cart,
-    order: state.order
+    order: state.order,
+    error: state.error
   }
 }
 
@@ -60,7 +61,7 @@ class Main extends Component{
         <Switch>
           <Route exact path="/home" component={() => <Home  user = {this.props.user}/>}/>
           <Route exact path="/login" component={() => <Login login={this.props.login}/>}/>
-          <Route exact path="/signup" component={() => <Signup signup={this.props.signup} />}/>
+          <Route exact path="/signup" component={() => <Signup signup={this.props.signup} error={this.props.error}/>}/>
           <Route exact path="/logout" component={() => <Logout logout={this.props.logout} />}/>
           <Route exact path="/products" component={() => <Products products={this.props.products}  user = {this.props.user}/>}/>
           <Route exact path="/products/:id" component={() => <ProductDetail products={this.props.products} addtoCart = {this.props.addtoCart} user = {this.props.user}/>}/>

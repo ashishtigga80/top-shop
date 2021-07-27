@@ -4,7 +4,14 @@ import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 
+export const setError = (message) => ({
+   type: ActionTypes.SET_ERROR,
+   payload: message
+})
 
+export const clearError = () => ({
+   type: ActionTypes.CLEAR_ERROR
+})
 
 export const signup = (firstname, lastname, email, password) => (dispatch) => {
   return axios({
@@ -18,8 +25,9 @@ export const signup = (firstname, lastname, email, password) => (dispatch) => {
         }
         })
         .then(response => history.push("/login"))
+        .then(response => dispatch(clearError()))
         .catch((error) => {
-          console.log('MAMA', error.response)
+          dispatch(setError(error.response.data));
         });
 }
 
@@ -42,7 +50,7 @@ export const login = (email,password) => (dispatch) => {
           const decoded = jwt_decode(token);
           // Set current user
           dispatch(doLogin(decoded));
-          history.replace('/home');
+          history.push('/home');
         })
         .catch((response) => {
           console.log('request failed', response)

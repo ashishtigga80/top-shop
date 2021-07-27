@@ -1,3 +1,5 @@
+export const SET_ERROR = 'SET_ERROR';
+export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const DO_LOGIN = 'DO_LOGIN';
 export const USER_LOADING = 'USER_LOADINGS';
 export const DO_LOGOUT = 'DO_LOGOUT';
