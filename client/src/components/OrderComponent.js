@@ -4,6 +4,18 @@ import { Link } from 'react-router-dom';
 
 const Order = (props) => {
 
+  const Empty = () => {
+    return(<Row className="justify-content-center">
+          <Col md={12}>
+            <Card border="dark">
+              <Card.Body>
+                <Card.Title className="title-strong">No Orders Yet.</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>  
+        </Row>)
+  }
+
   if(props.order.isLoading) {
     return(
       <div >
@@ -62,6 +74,7 @@ const Order = (props) => {
             </Card>
           </Col>  
         </Row>
+        {props.order.orders.length === 0 ? <Empty /> : <></>}
         {OrderItems}
       </Container>
       </>

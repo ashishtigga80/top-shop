@@ -13,29 +13,19 @@ export const history = createBrowserHistory()
 const store = ConfigureStore();
 
 if (localStorage.jwtToken) {
-      // Set auth token header auth
       const token = localStorage.jwtToken;
       setAuthToken(token);
-      // Decode token and get user info and exp
-      const decoded = jwt_decode(token);
-      const currentTime = Date.now() / 1000; // to get in milliseconds
-      console.log(currentTime);
-      console.log(decoded.exp)
-      if (decoded.exp < currentTime) {
-      // Logout user
-        store.dispatch(doLogout());
 
-      // Redirect to login
+      const decoded = jwt_decode(token);
+      const currentTime = Date.now() / 1000; 
+
+      if (decoded.exp < currentTime) {
+        store.dispatch(doLogout());
         history.push('/login')
       }
       else{
-      // Set user and isAuthenticated
-      store.dispatch(doLogin(decoded));
+        store.dispatch(doLogin(decoded));
       }
-      // Check for expired token
-      
-      
-      
 }
 
 class App extends Component{

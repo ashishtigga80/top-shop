@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const Cart = (props) => {
 
   const DeletefromCart = (productId) => {
-    console.log("DELETE FROM cart" + productId)
     props.deletefromCart(productId)
   }
 
@@ -34,6 +33,18 @@ const Cart = (props) => {
         </Row>
       )
     }
+  }
+
+  const Empty = () => {
+    return(<Row className="justify-content-center">
+          <Col md={12}>
+            <Card border="dark">
+              <Card.Body>
+                <Card.Title className="title-strong">No items in Cart.</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>  
+        </Row>)
   }
 
   if(props.cart.isLoading) {
@@ -95,6 +106,7 @@ const Cart = (props) => {
             </Card>
           </Col>  
         </Row>
+        {props.cart.cart.products.length === 0 ? <Empty /> : <></>}
         {CartItems}
         <Checkout />
       </Container>
