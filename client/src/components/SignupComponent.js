@@ -3,9 +3,9 @@ import {Container, Card, Row, Col, Form, Button} from 'react-bootstrap';
 import {withRouter} from 'react-router-dom';
 import Error from './ErrorComponent';
 
-const Login = (props) => {
+const Signup = (props) => {
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     props.signup(event.target.firstname.value, event.target.lastname.value, event.target.email.value, event.target.password.value)
 
@@ -21,14 +21,20 @@ const Login = (props) => {
               <Card.Header>Signup to Shopinit</Card.Header>
               <Card.Body>
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="firstname">Firstname</Form.Label >
-                    <Form.Control id="firstname" name="firstname" type="text" placeholder="Enter firstname" required/>
-                  </Form.Group>
-                  <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="lastname">Lastname</Form.Label >
-                    <Form.Control id="lastname" name="lastname" type="text" placeholder="Enter lastname" required/>
-                  </Form.Group>
+                  <Row>
+                    <Col md={6}>
+                      <Form.Group className="mb-3 " >
+                        <Form.Label htmlFor="firstname">Firstname</Form.Label >
+                        <Form.Control id="firstname" name="firstname" type="text" placeholder="Enter firstname" required/>
+                      </Form.Group>
+                    </Col>
+                    <Col md={6}>
+                      <Form.Group className="mb-3" >
+                        <Form.Label htmlFor="lastname">Lastname</Form.Label >
+                        <Form.Control id="lastname" name="lastname" type="text" placeholder="Enter lastname" required/>
+                      </Form.Group> 
+                   </Col>
+                  </Row>
                   <Form.Group className="mb-3" >
                     <Form.Label htmlFor="email">Email address</Form.Label >
                     <Form.Control id="email" name="email" type="email" placeholder="Enter email" required/>
@@ -52,4 +58,4 @@ const Login = (props) => {
 }
 
 
-export default withRouter(Login);
+export default withRouter(Signup);

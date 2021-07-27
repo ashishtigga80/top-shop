@@ -1,6 +1,7 @@
 import React  from 'react';
 import {Container, Card, Row, Col, Form, Button} from 'react-bootstrap';
 import {withRouter} from 'react-router-dom';
+import Error from './ErrorComponent';
 
 const Login = (props) => {
 
@@ -11,6 +12,7 @@ const Login = (props) => {
   }
   return(
       <Container>
+        <Error error = {props.error}/>
         <Row className="justify-content-center">
           <Col md={6} className="Col-padding">
             <Card border="dark">

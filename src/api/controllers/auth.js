@@ -29,7 +29,7 @@ module.exports.login = async (req, res) => {
             }
           );
         } else {
-          return res.sendStatus(401);
+          return res.status(401).send("Incorrect Email or Password! Try again.");
         }
       });
   }catch(error){
@@ -56,7 +56,7 @@ module.exports.signup = async (req, res) => {
         if (err) return res.status(500).send("Internal Server Error")
         newUser.password = hash;
           newUser.save()
-            .then(user => res.status(201).send("Created"))
+            .then(user => res.status(201).send(user))
             .catch(err => res.status(500).send("Internal Server Error"));
       });
     });

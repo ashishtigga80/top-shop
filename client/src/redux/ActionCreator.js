@@ -24,7 +24,7 @@ export const signup = (firstname, lastname, email, password) => (dispatch) => {
           password : password
         }
         })
-        .then(response => history.push("/login"))
+        .then(response => dispatch(login(email, password)))
         .then(response => dispatch(clearError()))
         .catch((error) => {
           dispatch(setError(error.response.data));
@@ -44,32 +44,29 @@ export const login = (email,password) => (dispatch) => {
         .then(res => {
           const { token } = res.data;
           localStorage.setItem("jwtToken", token);
-          // Set token to Auth header
           setAuthToken(token);
-          // Decode token to get user data
           const decoded = jwt_decode(token);
-          // Set current user
           dispatch(doLogin(decoded));
+          dispatch(clearError());
+          dispatch(fetchCart());
+          dispatch(fetchOrders());
           history.push('/home');
         })
-        .catch((response) => {
-          console.log('request failed', response)
+        .catch((error) => {
+          dispatch(setError(error.response.data));
         });
+}
+
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("jwtToken");
+  setAuthToken(false);
+  dispatch(doLogout());
+  history.replace('/home')
 }
 
 export const userLoading = () => ({
    type: ActionTypes.USER_LOADING
 })
-
-export const logout = () => (dispatch) => {
-  // Remove token from local storage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to empty object {} which will set isAuthenticated to false
-  dispatch(doLogout());
-  history.replace('/home')
-}
 
 export const doLogin = (user) => ({
    type: ActionTypes.DO_LOGIN,

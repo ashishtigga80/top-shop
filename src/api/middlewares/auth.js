@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const config = require('../../config/index')
 exports.auth = (req,res,next) => {
-         //getting token from cookie
         function extractToken (req) {
             if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
                 return req.headers.authorization.split(' ')[1];
@@ -12,15 +11,10 @@ exports.auth = (req,res,next) => {
             return null;
         }
         var token = extractToken(req);
-
-         //if there is no token redirect to login
-         if (!token) 
-             return res.status(200).redirect('/login')
-
-         //verifying the token    
-         jwt.verify(token, config.key, function(err, decoded) {
-         //if token is expired or some other error   
-         if (err) 
+        if (!token) 
+             return res.sendStatus(401);
+        jwt.verify(token, config.key, function(err, decoded) {
+        if (err) 
               return res.status(500).redirect('/login');  
           
         //sending obj id of the user in req after decoding the token        
