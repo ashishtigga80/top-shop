@@ -17,9 +17,9 @@ export const signup = (firstname, lastname, email, password) => (dispatch) => {
           password : password
         }
         })
-        .then(history.replace('/login'))
-        .catch((response) => {
-          console.log('request failed', response)
+        .then(response => history.push("/login"))
+        .catch((error) => {
+          console.log('MAMA', error.response)
         });
 }
 

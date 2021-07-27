@@ -11,7 +11,19 @@ var cartTotal = (cart) => {
 
 module.exports.viewcart = async (req,res ) => {
   await Cart.findOne({userId: req.user._id},function(err, cart) {
-    res.send(cart)
+    if(!cart){
+      const cart = new Cart({
+              userId : req.user._id,
+              products: [],
+              cartTotal: 0
+            })
+      cart.save()
+              .then(cart => res.send(cart))
+              .catch(err => res.status(500).send("Internal Server Error"));            
+    }
+    else{
+          res.send(cart)
+    }
   });
 }
 
