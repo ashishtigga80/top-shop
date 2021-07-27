@@ -10,11 +10,11 @@ var cartTotal = (cart) => {
 }
 
 module.exports.viewcart = (req,res ) => {
-  Cart.findOne({userId: req.user._id},function(err, cart) {
+  Cart.findOne({userId: req.user.id},function(err, cart) {
     if(err) return res.status(500).send("Internal Server Error"); 
     if(!cart){
       const cart = new Cart({
-              userId : req.user._id,
+              userId : req.user.id,
               products: [],
               cartTotal: 0
             })
@@ -29,7 +29,7 @@ module.exports.viewcart = (req,res ) => {
 }
 
 module.exports.addtocart = (req, res) => {
-  Cart.findOne({userId: req.user._id}, async function(err, cart) {
+  Cart.findOne({userId: req.user.id}, async function(err, cart) {
     if (err) return res.status(500).send("Unable to add to cart! Internal Server Error"); 
     let index = cart.products.findIndex(x => x.productId === req.params.id)
     if(index>-1){
@@ -50,7 +50,7 @@ module.exports.addtocart = (req, res) => {
 }
 
 module.exports.deletefromcart = (req, res) => {
-  Cart.findOne({userId: req.user._id}, function(err, cart) {
+  Cart.findOne({userId: req.user.id}, function(err, cart) {
     if (err) return res.status(500).send("Unable to delete item! Internal Server Error"); 
     index = cart.products.findIndex(x => x.productId === req.params.id)
     if( index > -1){
@@ -65,7 +65,7 @@ module.exports.deletefromcart = (req, res) => {
 }
 
 module.exports.updatecart = (req, res) => {
-  Cart.findOne({userId: req.user._id}, function(err, cart) {
+  Cart.findOne({userId: req.user.id}, function(err, cart) {
     if (err) return res.status(500).send("Unable to update quantity! Internal Server Error"); 
     index = cart.products.findIndex(x => x.productId === req.params.id)
     if( index > -1){

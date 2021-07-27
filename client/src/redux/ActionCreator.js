@@ -218,12 +218,17 @@ export const shippingDetails =  (details) => ({
 export const checkout = (id, source, shippingdetails) => dispatch => {
     axios.post("/cart/checkout/pay", {source, shippingdetails})
         .then(dispatch(ordersLoading()))
+        .then(dispatch(clearError()))
         .then((response) => {
           dispatch(addtoOrders(response.data))
           dispatch(orderCartUpdate(response.data.cart))
         })
         .then(history.push('/orders'))
-        .catch(err => console.log("This is the error",err));
+        .catch((error) => {
+          history.push('/cart')
+          dispatch(fetchCart())
+          dispatch(setError(error.response.data));
+        })
 }
 
 
@@ -236,6 +241,7 @@ export const fetchOrders = () => (dispatch) => {
         .then(dispatch(clearError()))
         .then(response => dispatch(addOrders(response.data)))
         .catch((error) => {
+          history.push('/orders')
           dispatch(setError(error.response.data));
   });
 }
